@@ -1,0 +1,12 @@
+integration_tests:
+  target: postgres
+  outputs:
+    postgres:
+      type: postgres
+      host: localhost
+      user: newuser
+      pass: password
+      port: 5432
+      dbname: test_database
+      schema: ml_inline_preprocessing_integration_tests_postgres
+      threads: 1

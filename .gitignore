@@ -1,4 +1,10 @@
 
 target/
+dbt_modules/
 dbt_packages/
 logs/
+env/
+.venv/
+.env/
+venv/
+integration_tests/.user.yml
