@@ -6,3 +6,48 @@ models:
       - assert_equal:
           actual: actual
           expected: expected
+
+  - name: test_categorical_impute
+    data_tests:
+      - assert_equal:
+          actual: actual
+          expected: expected
+
+  - name: test_max_absolute_scale
+    data_tests:
+      - assert_equal:
+          actual: actual
+          expected: expected
+
+  - name: test_min_max_scale
+    data_tests:
+      - assert_equal:
+          actual: actual
+          expected: expected
+
+  - name: test_numerical_impute
+    data_tests:
+      - assert_equal:
+          actual: actual_mean
+          expected: expected_mean
+      - assert_equal:
+          actual: actual_median
+          expected: expected_median
+
+  - name: test_one_hot_encode
+    data_tests:
+      - assert_equal:
+          actual: is_input__cat
+          expected: expected_is_input__cat
+      - assert_equal:
+          actual: is_input__dog
+          expected: expected_is_input__dog
+      - assert_equal:
+          actual: is_input__
+          expected: expected_is_input__
+
+  - name: test_standardize
+    data_tests:
+      - assert_close:
+          actual: actual
+          expected: expected

@@ -7,7 +7,7 @@ profile: "integration_tests"
 model-paths: ["models"]
 analysis-paths: ["analyses"]
 test-paths: ["tests"]
-seed-paths: ["seeds"]
+seed-paths: ["data"]
 macro-paths: ["macros"]
 
 target-path: "target"
@@ -20,4 +20,5 @@ seeds:
   +quote_columns: false
 
 models:
-  +bind: false
+  +schema: model_output
+  +quote_columns: false

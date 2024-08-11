@@ -1,4 +1,3 @@
-
 with data_log_transform as (
     select * from {{ ref('data_log_transform') }}
 )

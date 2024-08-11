@@ -1,0 +1,8 @@
+input,output_is_input__cat,output_is_input__dog,output_is_input__
+cat,1,0,0
+dog,0,1,0
+,0,0,1
+dog,0,1,0
+cat,1,0,0
+,0,0,1
+cat,1,0,0

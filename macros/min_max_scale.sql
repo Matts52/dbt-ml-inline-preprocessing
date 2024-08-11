@@ -8,13 +8,13 @@
         ((value - min of column) / (max of column - min of column)) * (new maximum - new minimum) + (new minimum)
     */
     (
-        ({{ column }} - min({{ column }}) over ())
+        (({{ column }}) - (min({{ column }}) over ()))
         /
-        (max({{ column }}) over () - min({{ column }}) over ())
+        ((max({{ column }}) over ()) - (min({{ column }}) over ()))::FLOAT
     )
     *
-    ({{ max }} - {{ min }})
+    ({{ new_max }} - {{ new_min }})
     +
-    {{ min }}
+    {{ new_min }}
 
 {% endmacro %}

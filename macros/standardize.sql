@@ -1,4 +1,4 @@
-{% macro standardize(column, target_mean=0, tarfet_stddev=1) %}
+{% macro standardize(column, target_mean=0, target_stddev=1) %}
     {{ return(adapter.dispatch('standardize', 'dbt_ml_inline_preprocessing')(column, target_mean, target_stddev)) }}
 {% endmacro %}
 
@@ -10,7 +10,7 @@
     (
         ({{ column }} - avg({{ column }}) over ())
         /
-        stddev({{ column }}) over ()
+        (stddev({{ column }}) over ())::FLOAT
     )
     *
     {{ target_stddev }}
