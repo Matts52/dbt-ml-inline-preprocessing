@@ -28,9 +28,9 @@ Currently this package supports the Snowflake and Postgres adapters
 * [Imputation](#imputation)
     * [categorical_impute](#categorical_impute)
     * [numerical_impute](#numerical_impute)
-* [Encoding](#imputation)
+* [Encoding](#encoding)
     * [one_hot_encode](#one_hot_encode)
-* [Numerical Transformation](#imputation)
+* [Numerical Transformation](#numerical-transformation)
     * [log_transform](#log_transform)
     * [max_absolute_scale](#max_absolute_scale)
     * [min_max_scale](#min_max_scale)
@@ -41,7 +41,8 @@ Currently this package supports the Snowflake and Postgres adapters
 
 ## Imputation
 
-### categorical_impute ([source](macros/categorical_impute.sql))
+### categorical_impute
+([source](macros/categorical_impute.sql))
 
 This macro returns impute categorical data for a column in a model, source, or CTE
 
@@ -62,7 +63,8 @@ This macro returns impute categorical data for a column in a model, source, or C
 }}
 ```
 
-### numerical_impute ([source](macros/numerical_impute.sql))
+### numerical_impute
+([source](macros/numerical_impute.sql))
 
 This macro returns imputed numerical data for a column in a model, source, or CTE
 
@@ -87,7 +89,8 @@ This macro returns imputed numerical data for a column in a model, source, or CT
 
 ## Encoding
 
-### one_hot_encode ([source](macros/one_hot_encode.sql))
+### one_hot_encode
+([source](macros/one_hot_encode.sql))
 
 This macro returns one hot encoded fields from a categorical column
 
@@ -108,7 +111,8 @@ This macro returns one hot encoded fields from a categorical column
 
 ## Numerical Transformation
 
-### log_transform ([source](macros/log_transform.sql))
+### log_transform
+([source](macros/log_transform.sql))
 
 This macro returns the given column after applying a log transformation to the numerical data
 
@@ -129,7 +133,8 @@ This macro returns the given column after applying a log transformation to the n
 }}
 ```
 
-### max_absolute_scale ([source](macros/max_absolute_scale.sql))
+### max_absolute_scale
+([source](macros/max_absolute_scale.sql))
 
 This macro transforms the given column by dividing each value by the maximum absolute value within the column. This transforms the range of values within the column to be [-1, 1]
 
@@ -146,7 +151,8 @@ This macro transforms the given column by dividing each value by the maximum abs
 }}
 ```
 
-### min_max_scale ([source](macros/min_max_scale.sql))
+### min_max_scale
+([source](macros/min_max_scale.sql))
 
 This macro transforms the given column to have a specified minimum and specified maximum, and scaling all values to fit that range. This transforms the range of values within the column to be [new minimum, new maximum]
 
@@ -167,7 +173,8 @@ This macro transforms the given column to have a specified minimum and specified
 }}
 ```
 
-### min_max_scale ([source](macros/min_max_scale.sql))
+### min_max_scale
+([source](macros/min_max_scale.sql))
 
 This macro transforms the given column to have a specified minimum and specified maximum, and scaling all values to fit that range. This transforms the range of values within the column to be [new minimum, new maximum]
 
