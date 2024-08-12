@@ -51,3 +51,8 @@ models:
       - assert_close:
           actual: actual
           expected: expected
+
+  - name: test_random_impute
+    data_tests:
+      - assert_not_null:
+          column: actual

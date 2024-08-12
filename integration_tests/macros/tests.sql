@@ -11,5 +11,5 @@
 {% endtest %}
 
 {% test assert_not_null(model, column) %}
-    select * from {{ model }} where column is null
+    select * from {{ model }} where {{ column }} is null
 {% endtest %}
