@@ -30,6 +30,7 @@ Currently this package supports the Snowflake and Postgres adapters
 * [Imputation](#imputation)
     * [categorical_impute](#categorical_impute)
     * [numerical_impute](#numerical_impute)
+    * [random_impute](#random_impute)
 * [Encoding](#encoding)
     * [one_hot_encode](#one_hot_encode)
 * [Numerical Transformation](#numerical-transformation)
@@ -88,6 +89,31 @@ This macro returns imputed numerical data for a column in a model, source, or CT
    )
 }}
 ```
+
+### random_impute
+([source](macros/random_impute.sql))
+
+This macro returns randomly imputed data for a column in a model or source based on values that already exist
+
+**Args:**
+
+- `column` (required): Name of the field that is to be imputed
+- `source_relation` (required): a Relation (a `ref` or `source`) that contains the list of columns you wish to select from
+- `data_type` (required): The data type of this column. Either `numerical` or `categorical`
+- `consider_distribution` (optional): Boolean of whether or not the distribution of existing values should be taken into account. Macro will run faster when this is set to false. Default is false
+
+**Usage:**
+
+```sql
+{{ dbt_ml_inline_preprocessing.random_impute(
+    column='user_type',
+    source_relation=ref('my_model'),
+    data_type=`categorical`,
+    consider_distribution=true
+   )
+}}
+```
+
 
 ## Encoding
 

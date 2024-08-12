@@ -1,8 +1,8 @@
-{% macro random_impute(column, source_relation, consider_distribution=true) %}
-    {{ return(adapter.dispatch('random_impute', 'dbt_ml_inline_preprocessing')(column, source_relation, consider_distribution)) }}
+{% macro random_impute(column, source_relation, data_type, consider_distribution=true) %}
+    {{ return(adapter.dispatch('random_impute', 'dbt_ml_inline_preprocessing')(column, source_relation, data_type, consider_distribution)) }}
 {% endmacro %}
 
-{% macro postgres__random_impute(column, source_relation, consider_distribution)  %}
+{% macro postgres__random_impute(column, source_relation, data_type, consider_distribution)  %}
 
     {% if consider_distribution == false %}
         /* Get unique value from the column */
@@ -43,9 +43,8 @@
             /* When the value is null and the remainder of the row number divided by the value count is equal to the loop index */
             when {{ column }} is null
                 and mod((row_number() over ()) + {{ random_num }}, {{ non_null_length }}) = {{ loop.index0 }}
-                    then '{{ column_value }}'
+                    then {% if data_type == 'numerical' %} {{ column_value }} {% else %} '{{ column_value }}' {% endif %}
         {% endfor %}
-        when {{ column }} is null then mod((row_number() over ()), {{ non_null_length }})::varchar
         else {{ column }}
     end
 
