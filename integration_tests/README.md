@@ -6,6 +6,24 @@
 ### Configure credentials
 Edit the `profiles.yml` file to hold your database credentials and information
 
+An example `profiles.yml` is as follows:
+
+```yaml
+integration_tests:
+  target: postgres
+  outputs:
+    postgres:
+      type: postgres
+      host: localhost
+      user: newuser
+      pass: password
+      port: 5432
+      dbname: test_database
+      schema: ml_inline_preprocessing_integration_tests_postgres
+      threads: 1
+```
+
+
 ### Setup virtual environment
 It is reccomended to use a virtual environment when developing this package. Run the following commands in the root (one folder up) of this project
 

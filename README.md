@@ -1,5 +1,7 @@
 This [dbt](https://github.com/dbt-labs/dbt) package contains macros that can be (re)used across dbt projects.
 
+Note: All methods in this package are meant to be used inline within a select statement.
+
 ## Installation Instructions
 
 To import this package into your dbt project, add the following to either the `packages.yml` or `dbt_project.yml` file:
