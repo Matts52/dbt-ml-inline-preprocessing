@@ -9,3 +9,7 @@
 {% test assert_close(model, actual, expected, decimal_place=2) %}
     select * from {{ model }} where round({{ actual }}::numeric, 2) != round({{ expected }}::numeric, 2)
 {% endtest %}
+
+{% test assert_not_null(model, column) %}
+    select * from {{ model }} where column is null
+{% endtest %}
