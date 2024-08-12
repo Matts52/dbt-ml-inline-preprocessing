@@ -93,7 +93,9 @@ This macro returns imputed numerical data for a column in a model, source, or CT
 ### random_impute
 ([source](macros/random_impute.sql))
 
-This macro returns randomly imputed data for a column in a model or source based on values that already exist
+This macro returns randomly imputed data for a column in a model or source based on values that already exist within the column
+
+NOTE: This method assumes that at least one value has been observed in the input column
 
 **Args:**
 
