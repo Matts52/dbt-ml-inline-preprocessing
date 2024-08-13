@@ -62,6 +62,15 @@ models:
       - assert_not_null:
           column: actual
 
+  - name: test_k_bins_discretize
+    data_tests:
+      - assert_equal:
+          actual: actual_quantile
+          expected: expected_quantile
+      - assert_equal:
+          actual: actual_uniform
+          expected: expected_uniform
+
   - name: test_rare_category_encode
     data_tests:
       - assert_equal:
