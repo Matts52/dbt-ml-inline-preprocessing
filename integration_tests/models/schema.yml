@@ -61,3 +61,9 @@ models:
     data_tests:
       - assert_not_null:
           column: actual
+
+  - name: test_rare_category_encode
+    data_tests:
+      - assert_equal:
+          actual: actual_20
+          expected: expected_20

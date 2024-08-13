@@ -6,8 +6,8 @@
 
     case
         when {{ column }} is null then null
-        when (COUNT(*) over (partition by {{ column }}) / COUNT(*) over ())::FLOAT < {{ cutoff }} then 'Other'
+        when (COUNT(*) over (partition by {{ column }}) / (COUNT(*) over ())::FLOAT) < {{ cutoff }} then 'Other'
         else {{ column }}
-    end as encoded_category
+    end
 
 {% endmacro %}
