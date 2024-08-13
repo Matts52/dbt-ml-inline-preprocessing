@@ -33,6 +33,7 @@ Currently this package supports the Snowflake and Postgres adapters
     * [random_impute](#random_impute)
 * [Encoding](#encoding)
     * [one_hot_encode](#one_hot_encode)
+    * [rare_category_encode](#rare_category_encode)
 * [Numerical Transformation](#numerical-transformation)
     * [log_transform](#log_transform)
     * [max_absolute_scale](#max_absolute_scale)
@@ -135,6 +136,26 @@ This macro returns one hot encoded fields from a categorical column
 {{ dbt_ml_inline_preprocessing.one_hot_encode(
     source_relation=ref('my_model'),
     source_column='purchase_value',
+   )
+}}
+```
+
+### rare_category_encode
+([source](macros/rare_category_encode.sql))
+
+This macro encodes rarely occuring categorical values with 'Other', leaving the rest of the categorical column values as is
+
+**Args:**
+
+- `column` (required): Name of the field that is to be rare category encoded
+- `cutoff` (optional): The percentage value (in decimal) that is to serve as the point where any values occuring with a lesser frequency are rare category encoded. Default is 0.05 (ie 5%)
+
+**Usage:**
+
+```sql
+{{ dbt_ml_inline_preprocessing.rare_category_encode(
+    column='user_type',
+    cutoff=0.10,
    )
 }}
 ```
