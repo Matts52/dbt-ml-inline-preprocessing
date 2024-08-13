@@ -1,25 +1,24 @@
 {% macro k_bins_discretize(column, k, strategy='quantile') %}
-    {{ return(adapter.dispatch('k_bins_discretize', 'dbt_ml_inline_preprocessing')(column, k)) }}
+    {{ return(adapter.dispatch('k_bins_discretize', 'dbt_ml_inline_preprocessing')(column, k, strategy)) }}
 {% endmacro %}
 
-{% macro default__k_bins_discretize(column, k)  %}
+{% macro default__k_bins_discretize(column, k, strategy)  %}
 
-    {% if strategy='quantile' %}
+    {% if strategy == 'quantile' %}
         NTILE({{ k }}) over (order by {{ column }})
-    {% elif strategy='uniform' %}
+    {% elif strategy == 'uniform' %}
         /*
             floor of (value - min) / ((max - min) / k) + 1
         */
+        floor(
         (
-            {{ column }} - (min({{ column }} over ()))
+            {{ column }} - (min({{ column }}) over ())
         )
         /
         (
-            ((min({{ column }} over ()) - (min({{ column }} over ())))
-            / 
-            {{ k }}
+            ((max({{ column }}) over ()) - (min({{ column }}) over ())) / {{ k - 1 }}::float
         )
-        )::int + 1 AS bin_number
+        ) + 1
     {% else %}
         {% do exceptions.warn('Unsupported strategy. Please use "quantile" or "uniform"') %}
     {% endif %}

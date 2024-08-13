@@ -34,6 +34,7 @@ Currently this package supports the Snowflake and Postgres adapters
 * [Encoding](#encoding)
     * [one_hot_encode](#one_hot_encode)
 * [Numerical Transformation](#numerical-transformation)
+    * [k_bins_discretize](#k_bins_discretize)
     * [log_transform](#log_transform)
     * [max_absolute_scale](#max_absolute_scale)
     * [min_max_scale](#min_max_scale)
@@ -141,6 +142,29 @@ This macro returns one hot encoded fields from a categorical column
 
 ## Numerical Transformation
 
+### k_bins_discretize
+([source](macros/k_bins_discretize.sql))
+
+This macro returns the given column after discretizing it into a specified number of bins
+
+**Args:**
+
+- `column` (required): Name of the field that is to be k bins discretized
+- `k` (required): The number of bins to discretize into
+- `strategy` (optional): The method by which to discretize the column into bins. Supported options are "quantile" to discretize into equal sized bins and "uniform" to bin into equal width bins. Default is "quantile"
+
+**Usage:**
+
+```sql
+{{ dbt_ml_inline_preprocessing.log_transform(
+    column='purchase_value',
+    k=5,
+    strategy='quantile',
+   )
+}}
+```
+
+
 ### log_transform
 ([source](macros/log_transform.sql))
 
@@ -221,6 +245,28 @@ This macro transforms the given column to have a specified minimum and specified
     column='user_rating',
     new_min=0,
     new_max=10,
+   )
+}}
+```
+
+### standardize
+([source](macros/standardize.sql))
+
+This macro transforms the given column into a normal distribution. Transforms to a standard normal distribution by default
+
+**Args:**
+
+- `column` (required): Name of the field that is to be transformed
+- `target_mean` (optional): The new mean that the column assumes. Default is 0
+- `target_stddev` (optional): The new standard deviation that the column assumes. Default is 1
+
+**Usage:**
+
+```sql
+{{ dbt_ml_inline_preprocessing.min_max_scale(
+    column='user_rating',
+    target_mean=0,
+    target_stddev=0,
    )
 }}
 ```
