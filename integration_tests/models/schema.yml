@@ -70,3 +70,9 @@ models:
       - assert_equal:
           actual: actual_uniform
           expected: expected_uniform
+
+  - name: test_rare_category_encode
+    data_tests:
+      - assert_equal:
+          actual: actual_20
+          expected: expected_20
