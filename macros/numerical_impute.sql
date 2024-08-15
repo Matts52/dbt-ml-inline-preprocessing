@@ -22,11 +22,13 @@
         {% do exceptions.warn('Source relation is required for percentile impute in Postgresql 9.4+') %}
     {% endif %}
 
-    {% set percentile_query %}
-        select percentile_cont({{ percentile }}) within group (order by {{ column }} ) as mode from {{ source_relation }}
-    {% endset %}
+    {% if measure != 'mean' %}
+        {% set percentile_query %}
+            select percentile_cont({{ percentile }}) within group (order by {{ column }} ) from {{ source_relation }}
+        {% endset %}
 
-    {% set result = dbt_utils.get_single_value(percentile_query) %}
+        {% set result = dbt_utils.get_single_value(percentile_query) %}
+    {% endif %}
 
     {% if measure == 'mean' %}
         coalesce({{ column }}, avg({{ column }}) OVER ())

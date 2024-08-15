@@ -32,13 +32,17 @@ Currently this package supports the Snowflake and Postgres adapters
     * [numerical_impute](#numerical_impute)
     * [random_impute](#random_impute)
 * [Encoding](#encoding)
+    * [label_encode](#label_encode)
     * [one_hot_encode](#one_hot_encode)
     * [rare_category_encode](#rare_category_encode)
 * [Numerical Transformation](#numerical-transformation)
+    * [interact](#interact)
     * [k_bins_discretize](#k_bins_discretize)
     * [log_transform](#log_transform)
     * [max_absolute_scale](#max_absolute_scale)
     * [min_max_scale](#min_max_scale)
+    * [numerical_binarize](#numerical_binarize)
+    * [robust_scale](#robust_scale)
     * [standardize](#standardize)
 
 
@@ -121,6 +125,24 @@ NOTE: This method assumes that at least one value has been observed in the input
 
 ## Encoding
 
+### label_encode
+([source](macros/categorical_encode.sql))
+
+This macro returns a the labels encoded with individual integers from 0 to n-1. Note that this has the side effect of re-ordering the dataset.
+
+**Args:**
+
+- `column` (required): Name of the field that is to be encoded
+
+**Usage:**
+
+```sql
+{{ dbt_ml_inline_preprocessing.label_encode(
+    column='user_type',
+   )
+}}
+```
+
 ### one_hot_encode
 ([source](macros/one_hot_encode.sql))
 
@@ -128,8 +150,8 @@ This macro returns one hot encoded fields from a categorical column
 
 **Args:**
 
+- `column` (required): Name of the field that is to be one hot encoded
 - `source_relation` (required for some databases): a Relation (a `ref` or `source`) that contains the list of columns you wish to select from
-- `source_column` (required): Name of the field that is to be one hot encoded
 
 **Usage:**
 
@@ -162,6 +184,28 @@ This macro encodes rarely occuring categorical values with 'Other', leaving the 
 ```
 
 ## Numerical Transformation
+
+### interact
+([source](macros/interact.sql))
+
+This macro creates an interaction term between two numerical columns
+
+**Args:**
+
+- `column_one` (required): Name of the first field in the interaction term
+- `column_two` (required): Name of the second field in the interaction term
+- `interaction` (optional): The interaction to apply. Options are "multaplicative", "additive", "exponential". Default is "multiplicative"
+
+**Usage:**
+
+```sql
+{{ dbt_ml_inline_preprocessing.interact(
+    column='purchase_value',
+    base=10,
+    offset=1,
+   )
+}}
+```
 
 ### k_bins_discretize
 ([source](macros/k_bins_discretize.sql))
@@ -270,6 +314,55 @@ This macro transforms the given column to have a specified minimum and specified
 }}
 ```
 
+### numerical_binarize
+([source](macros/numerical_binarize.sql))
+
+This macro transforms the given numerical column into binary value based on either a specified cutoff value or percentile
+
+**Args:**
+
+- `column` (required): Name of the field that is to be transformed
+- `cutoff` (required): The value that serves as the boundary point for the binary variable. This should be a value between 0 and 1 for percentile cutoff's. Default is 0.5
+- `strategy` (optional): The method with which to set the boundary point for the binary variable, options are "percentile" and "value". Default is 'percentile'
+- `direction` (optional): The direction that the 1 value should signify for the binary variable. Options are ">", ">=", "<", and "<=". Default is ">="
+- `source_relation` (required for some databases): a Relation (a `ref` or `source`) that contains the list of columns you wish to select from
+
+
+**Usage:**
+
+```sql
+{{ dbt_ml_inline_preprocessing.numerical_binarize(
+        'input',
+        strategy='percentile',
+        cutoff=0.2,
+        direction='>',
+        source_relation=ref('data_numerical_binarize')
+    )
+}}
+```
+
+### robust_scale
+([source](macro/robust_scale.sql))
+
+This macro transforms the given column into IQR scaled values to more effectively deal with concerning outlier datapoints
+
+**Args:**
+
+- `column` (required): Name of the field that is to be transformed
+- `iqr` (optional): The interquantile range to consider and scale by. Expects a number between 0 and 1 excluse. Default is 0.5, leading to a interquantile range stretching from the 25th percentile to the 75th percentile
+- `source_relation` (required for some databases): a Relation (a `ref` or `source`) that contains the list of columns you wish to select from
+
+**Usage:**
+
+```sql
+{{ dbt_ml_inline_preprocessing.robust_scale(
+    column='user_rating',
+    iqr=0.5
+    source_relation=ref('my_model')
+   )
+}}
+```
+
 ### standardize
 ([source](macros/standardize.sql))
 
@@ -284,7 +377,7 @@ This macro transforms the given column into a normal distribution. Transforms to
 **Usage:**
 
 ```sql
-{{ dbt_ml_inline_preprocessing.min_max_scale(
+{{ dbt_ml_inline_preprocessing.standardize(
     column='user_rating',
     target_mean=0,
     target_stddev=0,

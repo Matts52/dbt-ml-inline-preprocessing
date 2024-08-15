@@ -76,3 +76,36 @@ models:
       - assert_equal:
           actual: actual_20
           expected: expected_20
+
+  - name: test_numerical_binarize
+    data_tests:
+      - assert_equal:
+          actual: actual_value
+          expected: expected_value
+      - assert_equal:
+          actual: actual_percentile
+          expected: expected_percentile
+
+  - name: test_interact
+    data_tests:
+      - assert_equal:
+          actual: actual_mult
+          expected: expected_mult
+      - assert_equal:
+          actual: actual_add
+          expected: expected_add
+      - assert_equal:
+          actual: actual_exp
+          expected: expected_exp
+
+  - name: test_label_encode
+    data_tests:
+      - assert_equal:
+          actual: actual
+          expected: expected
+
+  - name: test_robust_scale
+    data_tests:
+      - assert_equal:
+          actual: actual
+          expected: expected
