@@ -42,6 +42,7 @@ Currently this package supports the Snowflake and Postgres adapters
     * [max_absolute_scale](#max_absolute_scale)
     * [min_max_scale](#min_max_scale)
     * [numerical_binarize](#numerical_binarize)
+    * [robust_scale](#robust_scale)
     * [standardize](#standardize)
 
 
@@ -340,6 +341,28 @@ This macro transforms the given numerical column into binary value based on eith
 }}
 ```
 
+### robust_scale
+([source](macro/robust_scale.sql))
+
+This macro transforms the given column into IQR scaled values.
+
+**Args:**
+
+- `column` (required): Name of the field that is to be transformed
+- `iqr` (optional): The interquantile range to consider and scale by. Expects a number between 0 and 1 excluse. Default is 0.5, leading to a interquantile range stretching from the 25th percentile to the 75th percentile
+- `source_relation` (required for some databases): a Relation (a `ref` or `source`) that contains the list of columns you wish to select from
+
+**Usage:**
+
+```sql
+{{ dbt_ml_inline_preprocessing.robust_scale(
+    column='user_rating',
+    iqr=0.5
+    source_relation=ref('my_model')
+   )
+}}
+```
+
 ### standardize
 ([source](macros/standardize.sql))
 
@@ -354,7 +377,7 @@ This macro transforms the given column into a normal distribution. Transforms to
 **Usage:**
 
 ```sql
-{{ dbt_ml_inline_preprocessing.min_max_scale(
+{{ dbt_ml_inline_preprocessing.standardize(
     column='user_rating',
     target_mean=0,
     target_stddev=0,

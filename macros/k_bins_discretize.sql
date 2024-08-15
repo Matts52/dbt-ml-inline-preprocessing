@@ -7,9 +7,9 @@
     {% if strategy == 'quantile' %}
         NTILE({{ k }}) over (order by {{ column }})
     {% elif strategy == 'uniform' %}
-        /*
-            floor of (value - min) / ((max - min) / k) + 1
-        */
+        {#
+            (floor of (value - min)) / ((max - min) / k) + 1
+        #}
         floor(
         (
             {{ column }} - (min({{ column }}) over ())
