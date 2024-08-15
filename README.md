@@ -35,6 +35,7 @@ Currently this package supports the Snowflake and Postgres adapters
     * [one_hot_encode](#one_hot_encode)
     * [rare_category_encode](#rare_category_encode)
 * [Numerical Transformation](#numerical-transformation)
+    * [interact](#interact)
     * [k_bins_discretize](#k_bins_discretize)
     * [log_transform](#log_transform)
     * [max_absolute_scale](#max_absolute_scale)
@@ -163,6 +164,28 @@ This macro encodes rarely occuring categorical values with 'Other', leaving the 
 ```
 
 ## Numerical Transformation
+
+### interact
+([source](macros/interact.sql))
+
+This macro creates an interaction term between two numerical columns
+
+**Args:**
+
+- `column_one` (required): Name of the first field in the interaction term
+- `column_two` (required): Name of the second field in the interaction term
+- `interaction` (optional): The interaction to apply. Options are "multaplicative", "additive", "exponential". Default is "multiplicative"
+
+**Usage:**
+
+```sql
+{{ dbt_ml_inline_preprocessing.interact(
+    column='purchase_value',
+    base=10,
+    offset=1,
+   )
+}}
+```
 
 ### k_bins_discretize
 ([source](macros/k_bins_discretize.sql))

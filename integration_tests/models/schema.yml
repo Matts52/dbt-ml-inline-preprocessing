@@ -85,3 +85,15 @@ models:
       - assert_equal:
           actual: actual_percentile
           expected: expected_percentile
+
+  - name: test_interact
+    data_tests:
+      - assert_equal:
+          actual: actual_mult
+          expected: expected_mult
+      - assert_equal:
+          actual: actual_add
+          expected: expected_add
+      - assert_equal:
+          actual: actual_exp
+          expected: expected_exp
