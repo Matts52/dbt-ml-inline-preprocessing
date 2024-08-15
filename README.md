@@ -39,6 +39,7 @@ Currently this package supports the Snowflake and Postgres adapters
     * [log_transform](#log_transform)
     * [max_absolute_scale](#max_absolute_scale)
     * [min_max_scale](#min_max_scale)
+    * [numerical_binarize](#numerical_binarize)
     * [standardize](#standardize)
 
 
@@ -267,6 +268,33 @@ This macro transforms the given column to have a specified minimum and specified
     new_min=0,
     new_max=10,
    )
+}}
+```
+
+### numerical_binarize
+([source](macros/numerical_binarize.sql))
+
+This macro transforms the given numerical column into binary value based on either a specified cutoff value or percentile
+
+**Args:**
+
+- `column` (required): Name of the field that is to be transformed
+- `cutoff` (required): The value that serves as the boundary point for the binary variable. This should be a value between 0 and 1 for percentile cutoff's. Default is 0.5
+- `strategy` (optional): The method with which to set the boundary point for the binary variable, options are "percentile" and "value". Default is 'percentile'
+- `direction` (optional): The direction that the 1 value should signify for the binary variable. Options are ">", ">=", "<", and "<=". Default is ">="
+- `source_relation` (required for some databases): a Relation (a `ref` or `source`) that contains the list of columns you wish to select from
+
+
+**Usage:**
+
+```sql
+{{ dbt_ml_inline_preprocessing.numerical_binarize(
+        'input',
+        strategy='percentile',
+        cutoff=0.2,
+        direction='>',
+        source_relation=ref('data_numerical_binarize')
+    )
 }}
 ```
 
