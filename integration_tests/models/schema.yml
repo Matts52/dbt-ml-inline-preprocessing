@@ -97,3 +97,9 @@ models:
       - assert_equal:
           actual: actual_exp
           expected: expected_exp
+
+  - name: test_label_encode
+    data_tests:
+      - assert_equal:
+          actual: actual
+          expected: expected

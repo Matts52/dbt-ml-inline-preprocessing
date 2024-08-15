@@ -32,6 +32,7 @@ Currently this package supports the Snowflake and Postgres adapters
     * [numerical_impute](#numerical_impute)
     * [random_impute](#random_impute)
 * [Encoding](#encoding)
+    * [label_encode](#label_encode)
     * [one_hot_encode](#one_hot_encode)
     * [rare_category_encode](#rare_category_encode)
 * [Numerical Transformation](#numerical-transformation)
@@ -122,6 +123,24 @@ NOTE: This method assumes that at least one value has been observed in the input
 
 
 ## Encoding
+
+### label_encode
+([source](macros/categorical_encode.sql))
+
+This macro returns a the labels encoded with individual integers from 0 to n-1. Note that this has the side effect of re-ordering the dataset.
+
+**Args:**
+
+- `column` (required): Name of the field that is to be encoded
+
+**Usage:**
+
+```sql
+{{ dbt_ml_inline_preprocessing.label_encode(
+    column='user_type',
+   )
+}}
+```
 
 ### one_hot_encode
 ([source](macros/one_hot_encode.sql))
