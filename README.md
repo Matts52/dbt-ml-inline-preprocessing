@@ -150,8 +150,8 @@ This macro returns one hot encoded fields from a categorical column
 
 **Args:**
 
+- `column` (required): Name of the field that is to be one hot encoded
 - `source_relation` (required for some databases): a Relation (a `ref` or `source`) that contains the list of columns you wish to select from
-- `source_column` (required): Name of the field that is to be one hot encoded
 
 **Usage:**
 

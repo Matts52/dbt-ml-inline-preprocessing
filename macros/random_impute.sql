@@ -2,7 +2,7 @@
     {{ return(adapter.dispatch('random_impute', 'dbt_ml_inline_preprocessing')(column, source_relation, data_type, consider_distribution)) }}
 {% endmacro %}
 
-{% macro postgres__random_impute(column, source_relation, data_type, consider_distribution)  %}
+{% macro default__random_impute(column, source_relation, data_type, consider_distribution)  %}
 
     {% if consider_distribution == false %}
         {# Get unique value from the column #}
