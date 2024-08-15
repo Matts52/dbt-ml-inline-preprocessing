@@ -4,9 +4,9 @@
 
 {% macro default__standardize(column, target_mean, target_stddev)  %}
 
-    /*
+    {#
         ((value - mu_sample)/sigma_sample) * sigma_target + mu_target
-    */
+    #}
     (
         ({{ column }} - avg({{ column }}) over ())
         /

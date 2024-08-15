@@ -4,9 +4,9 @@
 
 {% macro default__min_max_scale(column, new_min, new_max)  %}
 
-    /*
+    {#
         ((value - min of column) / (max of column - min of column)) * (new maximum - new minimum) + (new minimum)
-    */
+    #}
     (
         (({{ column }}) - (min({{ column }}) over ()))
         /

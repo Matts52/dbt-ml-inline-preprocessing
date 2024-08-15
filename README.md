@@ -344,7 +344,7 @@ This macro transforms the given numerical column into binary value based on eith
 ### robust_scale
 ([source](macro/robust_scale.sql))
 
-This macro transforms the given column into IQR scaled values.
+This macro transforms the given column into IQR scaled values to more effectively deal with concerning outlier datapoints
 
 **Args:**
 
