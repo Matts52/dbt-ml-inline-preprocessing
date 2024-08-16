@@ -2,7 +2,7 @@
     {{ return(adapter.dispatch('numerical_impute', 'dbt_ml_inline_preprocessing')(column, measure, percentile, source_relation)) }}
 {% endmacro %}
 
-{% macro snowflake__numerical_impute(column, measure, percentile, source_relation)  %}
+{% macro default__numerical_impute(column, measure, percentile, source_relation)  %}
 
     {% if measure == 'mean' %}
         coalesce({{ column }}, avg({{ column }}) over ())

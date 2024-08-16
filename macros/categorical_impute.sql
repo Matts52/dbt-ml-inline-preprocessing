@@ -2,7 +2,7 @@
     {{ return(adapter.dispatch('categorical_impute', 'dbt_ml_inline_preprocessing')(column, measure, source_relation)) }}
 {% endmacro %}
 
-{% macro snowflake__categorical_impute(column, measure, source_relation)  %}
+{% macro default__categorical_impute(column, measure, source_relation)  %}
 
     {% if measure == 'mode' %}
         coalesce({{ column }}, mode({{ column }}) OVER ())
