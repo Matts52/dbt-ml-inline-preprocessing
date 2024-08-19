@@ -1,0 +1,182 @@
+version: 2
+
+macros:
+  - name: categorical_impute
+    description: |
+      This macro returns impute categorical data for a column in a model, source, or CTE
+    arguments:
+      - name: column
+        type: string
+        description: Name of the field that is to be imputed
+      - name: measure
+        type: string
+        description: The columns containing the data you want to transform
+      - name: source_relation
+        type: string
+        description: (required for some databases) A Relation (a ref or source) that contains the list of columns you wish to select from
+
+  - name: interact
+    description: |
+      This macro creates an interaction term between two numerical columns
+    arguments:
+      - name: column_one
+        type: string
+        description: Name of the first field in the interaction term
+      - name: column_two
+        type: string
+        description: Name of the second field in the interaction term
+      - name: interaction
+        type: string
+        description: The interaction to apply. Options are "multaplicative", "additive", "exponential". Default is "multiplicative"
+
+  - name: k_bins_discretize
+    description: |
+      This macro returns the given column after discretizing it into a specified number of bins
+    arguments:
+      - name: column
+        type: string
+        description: Name of the field that is to be k bins discretized
+      - name: k
+        type: integer
+        description: The number of bins to discretize into
+      - name: strategy
+        type: string
+        description: The method by which to discretize the column into bins. Supported options are "quantile" to discretize into equal sized bins and "uniform" to bin into equal width bins. Default is "quantile"
+
+  - name: label_encode
+    description: |
+      This macro returns a the labels encoded with individual integers from 0 to n-1. Note that this has the side effect of re-ordering the dataset.
+    arguments:
+      - name: column
+        type: string
+        description: Name of the field that is to be encoded
+
+  - name: log_tranform
+    description: |
+      This macro returns the given column after applying a log transformation to the numerical data
+    arguments:
+      - name: column
+        type: string
+        description: Name of the field that is to be log transformed
+      - name: base
+        type: integer
+        description: The base of the log function that is transforming the column. Default is 10
+      - name: offset
+        type: number
+        description: Value to be added to all values in the column before log transforming. Common use case is when zero values are included in the column. Default is 0
+
+  - name: max_absolute_scale
+    description: |
+      This macro transforms the given column by dividing each value by the maximum absolute value within the column. This transforms the range of values within the column to be [-1, 1]
+    arguments:
+      - name: column
+        type: string
+        description: Name of the field that is to be transformed
+
+  - name: min_max_scale
+    description: |
+      This macro transforms the given column to have a specified minimum and specified maximum, and scaling all values to fit that range. This transforms the range of values within the column to be [new minimum, new maximum]
+    arguments:
+      - name: column
+        type: string
+        description: Name of the field that is to be transformed
+      - name: new_min
+        type: number
+        description: The new minimum value to scale towards
+      - name: new_max
+        type: number
+        description: The new maximum value to scale towards
+
+  - name: numerical_binarize
+    description: |
+      This macro transforms the given numerical column into binary value based on either a specified cutoff value or percentile
+    arguments:
+      - name: column
+        type: string
+        description: Name of the field that is to be transformed
+      - name: cutoff
+        type: number
+        description: The value that serves as the boundary point for the binary variable. This should be a value between 0 and 1 for percentile cutoff's. Default is 0.5
+      - name: strategy
+        type: string
+        description: The method with which to set the boundary point for the binary variable, options are "percentile" and "value". Default is 'percentile'
+      - name: direction
+        type: string
+        description: The direction that the 1 value should signify for the binary variable. Options are ">", ">=", "<", and "<=". Default is ">="
+      - name: source_relation
+        type: string
+        description: (required for some databases) A Relation (a ref or source) that contains the list of columns you wish to select from
+
+  - name: numerical_impute
+    description: |
+      This macro returns imputed numerical data for a column in a model, source, or CTE
+    arguments:
+      - name: column
+        type: string
+        description: Name of the field that is to be imputed
+      - name: measure
+        type: string
+        description: The measure by which to impute the data. It is set to use the 'mean' by default, but also support 'median' and 'percentile'
+      - name: percentile
+        type: number
+        description: If percentile is selected for the measure, this indicates the percentile value to impute into null values
+      - name: source_relation
+        type: string
+        description: (required for some databases) A Relation (a ref or source) that contains the list of columns you wish to select from
+
+  - name: one_hot_encode
+    description: |
+      This macro returns one hot encoded fields from a categorical column.
+
+      NOTE: One hot encoded fields will have the naming convention `is_{column_name}_{value}`
+    arguments:
+      - name: column
+        type: string
+        description: Name of the field that is to be one hot encoded
+      - name: source_relation
+        type: string
+        description: (required for some databases) A Relation (a ref or source) that contains the list of columns you wish to select from
+
+  - name: random_impute
+    description: |
+      This macro returns randomly imputed data for a column in a model or source based on values that already exist within the column
+
+      NOTE: This method assumes that at least one value has been observed in the input column
+    arguments:
+      - name: column
+        type: string
+        description: Name of the field that is to be imputed
+      - name: source_relation
+        type: string
+        description: A Relation (a ref or source) that contains the list of columns you wish to select from
+      - name: data_type
+        type: string
+        description: The data type of this column. Either numerical or categorical
+      - name: consider_distribution
+        type: boolean
+        description: Whether or not the distribution of existing values should be taken into account. Macro will run faster when this is set to false. Default is false
+
+  - name: rare_category_encode
+    description: |
+      This macro encodes rarely occuring categorical values with 'Other', leaving the rest of the categorical column values as is
+    arguments:
+      - name: column
+        type: string
+        description: Name of the field that is to be rare category encoded
+      - name: cutoff
+        type: number
+        description: The percentage value (in decimal) that is to serve as the point where any values occuring with a lesser frequency are rare category encoded. Default is 0.05 (ie 5%)
+
+  - name: robust_scale
+    description: |
+      This macro transforms the given column into IQR scaled values to more effectively deal with concerning outlier datapoints
+    arguments:
+      - name: column
+        type: string
+        description: Name of the field that is to be transformed
+      - name: iqr
+        type: number
+        description: The interquantile range to consider and scale by. Expects a number between 0 and 1 excluse. Default is 0.5, leading to a interquantile range stretching from the 25th percentile to the 75th percentile
+      - name: source_relation
+        type: string
+        description: (required for some databases) A Relation (a ref or source) that contains the list of columns you wish to select from
