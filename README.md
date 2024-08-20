@@ -9,7 +9,7 @@ Note: All methods in this package are meant to be used inline within a select st
 
 ## Installation Instructions
 
-To import this package into your dbt project, add the following to either the `packages.yml` or `dbt_project.yml` file:
+To import this package into your dbt project, add the following to either the `packages.yml` or `dependencies.yml` file:
 
 ```
 packages:
@@ -153,6 +153,8 @@ This macro returns a the labels encoded with individual integers from 0 to n-1. 
 
 This macro returns one hot encoded fields from a categorical column
 
+NOTE: One hot encoded fields will have the naming convention `is_{column_name}_{value}`
+
 **Args:**
 
 - `column` (required): Name of the field that is to be one hot encoded
@@ -283,8 +285,8 @@ This macro transforms the given column to have a specified minimum and specified
 **Args:**
 
 - `column` (required): Name of the field that is to be transformed
-- `new_min` (optional): The new minimum value to scale towards
-- `new_max` (optional): The new maximum value to scale towards
+- `new_min` (optional): The new minimum value to scale towards. Default is 0.0
+- `new_max` (optional): The new maximum value to scale towards. Default is 1.0
 
 **Usage:**
 
