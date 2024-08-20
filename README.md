@@ -9,7 +9,7 @@ Note: All methods in this package are meant to be used inline within a select st
 
 ## Installation Instructions
 
-To import this package into your dbt project, add the following to either the `packages.yml` or `dbt_project.yml` file:
+To import this package into your dbt project, add the following to either the `packages.yml` or `dependencies.yml` file:
 
 ```
 packages:
