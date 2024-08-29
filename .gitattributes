@@ -1,2 +1,7 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+macros/* linguist-documentation=false
+macros/* linguist-vendored
+integration_tests/** linguist-documentation=false
+integration_tests/** linguist-vendored
