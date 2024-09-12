@@ -22,7 +22,7 @@
     {% endfor %}
 
     case
-        when {{ column }} = '' or {{ column }} is null then 1
+        when {{ column }} is null then 1
         else 0
     end as is_{{ column }}__
 
