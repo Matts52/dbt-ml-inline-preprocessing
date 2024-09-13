@@ -193,8 +193,8 @@ This macro encodes rarely occuring categorical values with 'Other', leaving the 
 
 ## Numerical Transformation
 
-### log_transform
-([source](macros/log_transform.sql))
+### exponentiate
+([source](macros/exponentiate.sql))
 
 This macro returns the given column after applying a exponential transformation to the numerical data. Often this is useful for when values are in logged form. By default the base will be `e` (the exponential constant)
 
