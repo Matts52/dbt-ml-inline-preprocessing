@@ -41,6 +41,7 @@ Currently this package supports the Snowflake and Postgres adapters
     * [one_hot_encode](#one_hot_encode)
     * [rare_category_encode](#rare_category_encode)
 * [Numerical Transformation](#numerical-transformation)
+    * [exponentiate](#exponentiate)
     * [interact](#interact)
     * [k_bins_discretize](#k_bins_discretize)
     * [log_transform](#log_transform)
@@ -191,6 +192,26 @@ This macro encodes rarely occuring categorical values with 'Other', leaving the 
 ```
 
 ## Numerical Transformation
+
+### log_transform
+([source](macros/log_transform.sql))
+
+This macro returns the given column after applying a exponential transformation to the numerical data. Often this is useful for when values are in logged form. By default the base will be `e` (the exponential constant)
+
+**Args:**
+
+- `column` (required): Name of the field that is to be exponentiated
+- `base` (optional): The base of the exponentiation to apply. By default this is 2.71, indicating that the exponential constant `e` should be used.
+
+**Usage:**
+
+```sql
+{{ dbt_ml_inline_preprocessing.exponentiate(
+    column='log_purchase_value',
+    base=10,
+   )
+}}
+```
 
 ### interact
 ([source](macros/interact.sql))

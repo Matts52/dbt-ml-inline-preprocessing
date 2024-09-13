@@ -109,3 +109,9 @@ models:
       - assert_equal:
           actual: actual
           expected: expected
+
+  - name: test_exponentiate
+    data_tests:
+      - assert_close:
+          actual: actual
+          expected: expected
