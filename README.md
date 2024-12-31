@@ -5,6 +5,25 @@ Note: All methods in this package are meant to be used inline within a select st
 **Current supported tested databases include:**
 - Postgres
 - Snowflake
+- DuckDB
+
+| **Method**                       | **Postgres** | **Snowflake** | **DuckDB** |
+|----------------------------------|--------------|---------------|------------|
+| [categorical_impute](#categorical_impute) | ✅           | ✅             | ✅          |
+| [numerical_impute](#numerical_impute)     | ✅           | ✅             | ✅          |
+| [random_impute](#random_impute)           | ✅           | ✅             | ✅          |
+| [label_encode](#label_encode)             | ✅           | ✅             | ✅          |
+| [one_hot_encode](#one_hot_encode)         | ✅           | ✅             | ✅          |
+| [rare_category_encode](#rare_category_encode) | ✅      | ✅             | ✅          |
+| [exponentiate](#exponentiate)             | ✅           | ✅             | ✅          |
+| [interact](#interact)                     | ✅           | ✅             | ✅          |
+| [k_bins_discretize](#k_bins_discretize)   | ✅           | ✅             | ✅          |
+| [log_transform](#log_transform)          | ✅           | ✅             | ✅          |
+| [max_absolute_scale](#max_absolute_scale) | ✅           | ✅             | ✅          |
+| [min_max_scale](#min_max_scale)           | ✅           | ✅             | ✅          |
+| [numerical_binarize](#numerical_binarize) | ✅           | ✅             | ✅          |
+| [robust_scale](#robust_scale)             | ✅           | ✅             | ✅          |
+| [standardize](#standardize)               | ✅           | ✅             | ✅          |
 
 
 ## Installation Instructions
@@ -14,7 +33,7 @@ To import this package into your dbt project, add the following to either the `p
 ```
 packages:
   - package: "Matts52/dbt_ml_inline_preprocessing"
-    version: [">=0.1.0"]
+    version: [">=0.2.0"]
 ```
 
 and run a `dbt deps` command to install the package to your project.
