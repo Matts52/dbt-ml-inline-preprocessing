@@ -9,3 +9,4 @@ venv/
 integration_tests/.user.yml
 integration_tests/profiles.yml
 .sqlfluff
+.DS_Store
