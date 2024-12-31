@@ -4,24 +4,6 @@
 
 {% macro default__robust_scale(column, iqr, source_relation)  %}
 
-    {#
-        (value - median) / (IQR_plus - IQR_minus)
-    #}
-
-    (
-        {{ column }} - (percentile_cont(0.5) within group (order by {{ column }}) over ())
-    )
-    /
-    (
-        percentile_cont(0.5 + {{ iqr }}/2) within group (order by {{ column }}) over ()
-        -
-        percentile_cont(0.5 - {{ iqr }}/2) within group (order by {{ column }}) over ()
-    )
-
-{% endmacro %}
-
-{% macro postgres__robust_scale(column, iqr, source_relation)  %}
-
     {% if source_relation == '' %}
         {% do exceptions.warn('Source relation is required for percentile impute in Postgresql 9.4+') %}
     {% endif %}
@@ -46,6 +28,24 @@
     /
     (
         {{ iqr_plus }} - {{ iqr_minus }}
+    )
+
+{% endmacro %}
+
+{% macro snowflake__robust_scale(column, iqr, source_relation)  %}
+
+    {#
+        (value - median) / (IQR_plus - IQR_minus)
+    #}
+
+    (
+        {{ column }} - (percentile_cont(0.5) within group (order by {{ column }}) over ())
+    )
+    /
+    (
+        percentile_cont(0.5 + {{ iqr }}/2) within group (order by {{ column }}) over ()
+        -
+        percentile_cont(0.5 - {{ iqr }}/2) within group (order by {{ column }}) over ()
     )
 
 {% endmacro %}

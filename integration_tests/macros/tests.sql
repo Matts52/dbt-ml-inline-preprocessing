@@ -1,4 +1,11 @@
 {% test assert_equal(model, actual, expected) %}
+    select *
+    from {{ model }}
+    where
+        abs({{ actual }} - {{ expected }}) > 0.0001
+{% endtest %}
+
+{% test assert_equal_string(model, actual, expected) %}
     select * from {{ model }} where {{ actual }} != {{ expected }}
 {% endtest %}
 

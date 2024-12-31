@@ -4,21 +4,6 @@
 
 {% macro default__numerical_binarize(column, cutoff, strategy, direction, source_relation)  %}
 
-    case
-        when {{ column }} {{ direction }} 
-            {% if strategy == 'percentile' %}
-                percentile_cont({{ percentile }}) within group (order by {{ column }}) over ()
-            {% else %}
-                {{ cutoff }}
-            {% endif %}
-            then 1
-        else 0
-    end
-
-{% endmacro %}
-
-{% macro postgres__numerical_binarize(column, cutoff, strategy, direction, source_relation)  %}
-
     {% if source_relation == '' and strategy == 'percentile' %}
         {% do exceptions.warn('Source relation is required for percentile impute in Postgresql 9.4+') %}
     {% endif %}
@@ -35,6 +20,21 @@
         when {{ column }} {{ direction }}
             {% if strategy == 'percentile' %}
                 {{ result }}
+            {% else %}
+                {{ cutoff }}
+            {% endif %}
+            then 1
+        else 0
+    end
+
+{% endmacro %}
+
+{% macro snowflake__numerical_binarize(column, cutoff, strategy, direction, source_relation)  %}
+
+    case
+        when {{ column }} {{ direction }} 
+            {% if strategy == 'percentile' %}
+                percentile_cont({{ percentile }}) within group (order by {{ column }}) over ()
             {% else %}
                 {{ cutoff }}
             {% endif %}

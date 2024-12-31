@@ -2,7 +2,7 @@ name: "ml_inline_preprocessing_integration_tests"
 version: "1.0"
 config-version: 2
 
-profile: "integration_tests"
+profile: "integration_tests_duckdb"
 
 model-paths: ["models"]
 test-paths: ["tests"]

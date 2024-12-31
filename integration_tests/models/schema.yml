@@ -9,7 +9,7 @@ models:
 
   - name: test_categorical_impute
     data_tests:
-      - assert_equal:
+      - assert_equal_string:
           actual: actual
           expected: expected
 
@@ -73,7 +73,7 @@ models:
 
   - name: test_rare_category_encode
     data_tests:
-      - assert_equal:
+      - assert_equal_string:
           actual: actual_20
           expected: expected_20
 
