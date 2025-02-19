@@ -1,4 +1,4 @@
-{% macro one_hot_encode(column, source_relation, condition) %}
+{% macro one_hot_encode(column, source_relation, condition='true') %}
     {{ return(adapter.dispatch('one_hot_encode', 'dbt_ml_inline_preprocessing')(column, source_relation, condition)) }}
 {% endmacro %}
 
@@ -11,8 +11,8 @@
         order_by=column,
         where=
             column
-            + " is not null"
-            + " and "
+            + ' is not null '
+            + ' and '
             + condition
         ) or []    
     %}
