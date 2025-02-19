@@ -1,15 +1,20 @@
-{% macro one_hot_encode(column, source_relation) %}
-    {{ return(adapter.dispatch('one_hot_encode', 'dbt_ml_inline_preprocessing')(column, source_relation)) }}
+{% macro one_hot_encode(column, source_relation, condition='true') %}
+    {{ return(adapter.dispatch('one_hot_encode', 'dbt_ml_inline_preprocessing')(column, source_relation, condition)) }}
 {% endmacro %}
 
-{% macro default__one_hot_encode(column, source_relation)  %}
+{% macro default__one_hot_encode(column, source_relation, condition)  %}
 
     {# Get the unique values that exist in the column to be encoded #}
     {% set category_values = dbt_utils.get_column_values(
         table=source_relation,
         column=column,
         order_by=column,
-        where=column + " is not null") or []    
+        where=
+            column
+            + ' is not null '
+            + ' and '
+            + condition
+        ) or []    
     %}
 
     {% for category in category_values %}

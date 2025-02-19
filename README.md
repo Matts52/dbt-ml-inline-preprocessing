@@ -179,6 +179,7 @@ NOTE: One hot encoded fields will have the naming convention `is_{column_name}_{
 
 - `column` (required): Name of the field that is to be one hot encoded
 - `source_relation` (required for some databases): a Relation (a `ref` or `source`) that contains the list of columns you wish to select from
+- `condition` (optional): A where clause condition to filter the field to be one-hot encoded by
 
 **Usage:**
 
@@ -186,6 +187,7 @@ NOTE: One hot encoded fields will have the naming convention `is_{column_name}_{
 {{ dbt_ml_inline_preprocessing.one_hot_encode(
     source_relation=ref('my_model'),
     source_column='purchase_value',
+    condition='purchase_value > 15',
    )
 }}
 ```
