@@ -185,8 +185,8 @@ NOTE: One hot encoded fields will have the naming convention `is_{column_name}_{
 
 ```sql
 {{ dbt_ml_inline_preprocessing.one_hot_encode(
+    column='purchase_value',
     source_relation=ref('my_model'),
-    source_column='purchase_value',
     condition='purchase_value > 15',
    )
 }}
