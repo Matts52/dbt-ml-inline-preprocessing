@@ -33,7 +33,7 @@ To import this package into your dbt project, add the following to either the `p
 ```
 packages:
   - package: "Matts52/dbt_ml_inline_preprocessing"
-    version: [">=0.2.0"]
+    version: [">=0.2.1"]
 ```
 
 and run a `dbt deps` command to install the package to your project.
