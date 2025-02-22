@@ -270,7 +270,7 @@ This macro returns the given column after discretizing it into a specified numbe
 **Usage:**
 
 ```sql
-{{ dbt_ml_inline_preprocessing.log_transform(
+{{ dbt_ml_inline_preprocessing.k_bins_discretize(
     column='purchase_value',
     k=5,
     strategy='quantile',
