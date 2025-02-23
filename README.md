@@ -243,7 +243,7 @@ This macro creates an interaction term between two numerical columns
 
 - `column_one` (required): Name of the first field in the interaction term
 - `column_two` (required): Name of the second field in the interaction term
-- `interaction` (optional): The interaction to apply. Options are "multaplicative", "additive", "exponential". Default is "multiplicative"
+- `interaction` (optional): The interaction to apply. Options are "multiplicative", "additive", "exponential". Default is "multiplicative"
 
 **Usage:**
 
@@ -251,7 +251,7 @@ This macro creates an interaction term between two numerical columns
 {{ dbt_ml_inline_preprocessing.interact(
     column='purchase_value',
     base=10,
-    offset=1,
+    interaction='multiplicative',
    )
 }}
 ```
@@ -341,28 +341,6 @@ This macro transforms the given column to have a specified minimum and specified
 }}
 ```
 
-### min_max_scale
-([source](macros/min_max_scale.sql))
-
-This macro transforms the given column to have a specified minimum and specified maximum, and scaling all values to fit that range. This transforms the range of values within the column to be [new minimum, new maximum]
-
-**Args:**
-
-- `column` (required): Name of the field that is to be transformed
-- `new_min` (optional): The new minimum value to scale towards
-- `new_max` (optional): The new maximum value to scale towards
-
-**Usage:**
-
-```sql
-{{ dbt_ml_inline_preprocessing.min_max_scale(
-    column='user_rating',
-    new_min=0,
-    new_max=10,
-   )
-}}
-```
-
 ### numerical_binarize
 ([source](macros/numerical_binarize.sql))
 
@@ -391,7 +369,7 @@ This macro transforms the given numerical column into binary value based on eith
 ```
 
 ### robust_scale
-([source](macro/robust_scale.sql))
+([source](macros/robust_scale.sql))
 
 This macro transforms the given column into IQR scaled values to more effectively deal with concerning outlier datapoints
 
