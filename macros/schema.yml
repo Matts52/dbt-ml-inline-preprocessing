@@ -51,7 +51,7 @@ macros:
         type: string
         description: Name of the field that is to be encoded
 
-  - name: log_tranform
+  - name: log_transform
     description: |
       This macro returns the given column after applying a log transformation to the numerical data
     arguments:
