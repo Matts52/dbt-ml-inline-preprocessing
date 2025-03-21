@@ -1,21 +1,30 @@
-{% macro one_hot_encode(column, source_relation, condition='true') %}
-    {{ return(adapter.dispatch('one_hot_encode', 'dbt_ml_inline_preprocessing')(column, source_relation, condition)) }}
+{% macro one_hot_encode(column, source_relation='', source_condition='true', categories=[]) %}
+    {{ return(adapter.dispatch('one_hot_encode', 'dbt_ml_inline_preprocessing')(column, source_relation, source_condition, categories)) }}
 {% endmacro %}
 
-{% macro default__one_hot_encode(column, source_relation, condition)  %}
+{% macro default__one_hot_encode(column, source_relation, source_condition, categories)  %}
 
     {# Get the unique values that exist in the column to be encoded #}
-    {% set category_values = dbt_utils.get_column_values(
-        table=source_relation,
-        column=column,
-        order_by=column,
-        where=
-            column
-            + ' is not null '
-            + ' and '
-            + condition
-        ) or []    
-    %}
+
+    {% if categories == [] and source_relation == '' %}
+        {% do exceptions.warn('Either source relation or categories must be set') %}
+    {% elif source_relation == '' %}
+        {% set category_values = categories %}
+    {% else %}
+        {% set category_values = dbt_utils.get_column_values(
+            table=source_relation,
+            column=column,
+            order_by=column,
+            where=
+                column
+                + ' is not null '
+                + ' and '
+                + source_condition
+            ) or []    
+        %}
+    {% endif %}
+
+    {# Generate a CASE statement for each unique value #}
 
     {% for category in category_values %}
 

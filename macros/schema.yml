@@ -135,7 +135,13 @@ macros:
         description: Name of the field that is to be one hot encoded
       - name: source_relation
         type: string
-        description: (required for some databases) A Relation (a ref or source) that contains the list of columns you wish to select from
+        description: (optional) A Relation (a ref or source) that contains the list of columns you wish to select from
+      - name: source_condition
+        type: string
+        description: (optional) A where clause condition to filter the field to be one-hot encoded by
+      - name: categories
+        type: list
+        description: (optional) An explicit list of categories to one-hot encode into
 
   - name: random_impute
     description: |

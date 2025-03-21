@@ -33,7 +33,7 @@ To import this package into your dbt project, add the following to either the `p
 ```
 packages:
   - package: "Matts52/dbt_ml_inline_preprocessing"
-    version: [">=0.2.1"]
+    version: [">=0.2.2"]
 ```
 
 and run a `dbt deps` command to install the package to your project.
@@ -178,8 +178,11 @@ NOTE: One hot encoded fields will have the naming convention `is_{column_name}_{
 **Args:**
 
 - `column` (required): Name of the field that is to be one hot encoded
-- `source_relation` (required for some databases): a Relation (a `ref` or `source`) that contains the list of columns you wish to select from
-- `condition` (optional): A where clause condition to filter the field to be one-hot encoded by
+- `source_relation` (optional): a Relation (a `ref` or `source`) that contains the list of columns you wish to select from
+- `source_condition` (optional): A where clause condition to filter the field to be one-hot encoded by
+- `categories` (optional): An explicit list of categories to one-hot encode into
+
+Note: Either `source_relation` or `categories` must be set and do not impact each other. If `source_relation` is set, `source_condition` may be optionall used to filter categories found in the source relation.
 
 **Usage:**
 
@@ -187,7 +190,15 @@ NOTE: One hot encoded fields will have the naming convention `is_{column_name}_{
 {{ dbt_ml_inline_preprocessing.one_hot_encode(
     column='purchase_value',
     source_relation=ref('my_model'),
-    condition='purchase_value > 15',
+    source_condition='purchase_value > 15',
+   )
+}}
+```
+
+```sql
+{{ dbt_ml_inline_preprocessing.one_hot_encode(
+    column='purchase_value',
+    categories=['low', 'medium', 'high', 'other']
    )
 }}
 ```
