@@ -34,7 +34,7 @@ models:
           actual: actual_median
           expected: expected_median
 
-  - name: test_one_hot_encode_source_relation
+  - name: test_one_hot_encode__source_relation
     data_tests:
       - assert_equal:
           actual: is_input__cat
@@ -46,7 +46,7 @@ models:
           actual: is_input__
           expected: expected_is_input__
 
-  - name: test_one_hot_encode_categories
+  - name: test_one_hot_encode__categories
     data_tests:
       - assert_equal:
           actual: is_input__cat
