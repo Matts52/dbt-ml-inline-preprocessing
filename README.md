@@ -260,8 +260,8 @@ This macro creates an interaction term between two numerical columns
 
 ```sql
 {{ dbt_ml_inline_preprocessing.interact(
-    column='purchase_value',
-    base=10,
+    colum_one_='purchase_value',
+    column_two='discount_value',
     interaction='multiplicative',
    )
 }}
