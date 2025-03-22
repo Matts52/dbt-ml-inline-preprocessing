@@ -22,6 +22,7 @@ Note: All methods in this package are meant to be used inline within a select st
 | [max_absolute_scale](#max_absolute_scale) | ✅           | ✅             | ✅          |
 | [min_max_scale](#min_max_scale)           | ✅           | ✅             | ✅          |
 | [numerical_binarize](#numerical_binarize) | ✅           | ✅             | ✅          |
+| [poly_transform](#poly_transform)         | ✅           | ✅             | ✅           
 | [robust_scale](#robust_scale)             | ✅           | ✅             | ✅          |
 | [standardize](#standardize)               | ✅           | ✅             | ✅          |
 
@@ -33,7 +34,7 @@ To import this package into your dbt project, add the following to either the `p
 ```
 packages:
   - package: "Matts52/dbt_ml_inline_preprocessing"
-    version: [">=0.2.2"]
+    version: [">=0.2.0"]
 ```
 
 and run a `dbt deps` command to install the package to your project.
@@ -67,6 +68,7 @@ Currently this package supports the Snowflake and Postgres adapters
     * [max_absolute_scale](#max_absolute_scale)
     * [min_max_scale](#min_max_scale)
     * [numerical_binarize](#numerical_binarize)
+    * [poly_transform](#poly_transform)
     * [robust_scale](#robust_scale)
     * [standardize](#standardize)
 
@@ -376,6 +378,26 @@ This macro transforms the given numerical column into binary value based on eith
         direction='>',
         source_relation=ref('data_numerical_binarize')
     )
+}}
+```
+
+### poly_transform
+([source](macros/poly_transform.sql))
+
+This macro transforms the given column into IQR scaled values to more effectively deal with concerning outlier datapoints
+
+**Args:**
+
+- `column` (required): Name of the field that is to be transformed
+- `degree` (optional): The degree of the polynomial transformation. Default is 2
+
+**Usage:**
+
+```sql
+{{ dbt_ml_inline_preprocessing.poly_transform(
+    column='user_rating',
+    degree=0.5
+   )
 }}
 ```
 

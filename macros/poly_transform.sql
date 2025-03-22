@@ -1,9 +1,9 @@
-{% macro poly_transform(column, exponent) %}
-    {{ return(adapter.dispatch('poly_transform', 'dbt_ml_inline_preprocessing')(column, exponent)) }}
+{% macro poly_transform(column, degree) %}
+    {{ return(adapter.dispatch('poly_transform', 'dbt_ml_inline_preprocessing')(column, degree)) }}
 {% endmacro %}
 
-{% macro default__poly_transform(column, exponent)  %}
+{% macro default__poly_transform(column, degree)  %}
 
-    POW({{ column }}, {{ exponent }})
+    POW({{ column }}, {{ degree }})
 
 {% endmacro %}
