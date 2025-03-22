@@ -58,6 +58,15 @@ models:
           actual: is_input__
           expected: expected_is_input__
 
+  - name: test_poly_transform
+    data_tests:
+      - assert_equal:
+          actual: actual_2
+          expected: expected_2
+      - assert_equal:
+          actual: actual_1_2
+          expected: expected_1_2
+
   - name: test_standardize
     data_tests:
       - assert_close:

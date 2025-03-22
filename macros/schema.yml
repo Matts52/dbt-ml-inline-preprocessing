@@ -143,6 +143,17 @@ macros:
         type: list
         description: (optional) An explicit list of categories to one-hot encode into
 
+  - name: poly_transform
+    description: |
+      This macro returns the given column after applying a polynomial transformation to the numerical data
+    arguments:
+      - name: column
+        type: string
+        description: Name of the field that is to be transformed
+      - name: degree
+        type: integer
+        description: The degree of the polynomial transformation. Default is 2
+
   - name: random_impute
     description: |
       This macro returns randomly imputed data for a column in a model or source based on values that already exist within the column
