@@ -47,7 +47,10 @@ This package currently support dbt versions 1.1.0 through 2.0.0
 
 ## Adapter Support
 
-Currently this package supports the Snowflake and Postgres adapters
+Currently this package supports:
+- `dbt-duckdb`
+- `dbt-postgres`
+- `dbt-snowflake`
 
 ----
 
