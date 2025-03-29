@@ -1,6 +1,18 @@
 version: 2
 
 models:
+  - name: test_bool_to_one_hot
+    data_tests:
+      - assert_equal:
+          actual: is_active
+          expected: expected_is_active
+      - assert_equal:
+          actual: is_deleted
+          expected: expected_is_deleted
+      - assert_equal:
+          actual: is_verified
+          expected: expected_is_verified
+
   - name: test_log_transform
     data_tests:
       - assert_equal:
