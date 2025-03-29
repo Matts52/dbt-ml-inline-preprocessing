@@ -1,6 +1,20 @@
 version: 2
 
 macros:
+  - name: bool_to_one_hot
+    description: |
+      This macro converts boolean columns to one-hot encoded format (0 or 1). It can handle multiple columns at once and provides options for handling null values.
+    arguments:
+      - name: columns
+        type: list
+        description: List of boolean column names to convert to one-hot format
+      - name: null_as_one
+        type: boolean
+        description: Whether to treat null values as 1 (true) or 0 (false). Default is false
+      - name: prefix
+        type: string
+        description: Prefix to use for the output column names. Default is 'is_'
+
   - name: categorical_impute
     description: |
       This macro returns impute categorical data for a column in a model, source, or CTE

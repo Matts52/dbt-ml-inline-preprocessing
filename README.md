@@ -9,6 +9,7 @@ Note: All methods in this package are meant to be used inline within a select st
 
 | **Method**                       | **Postgres** | **Snowflake** | **DuckDB** |
 |----------------------------------|--------------|---------------|------------|
+| [bool_to_one_hot](#bool_to_one_hot) | ✅           | ✅             | ✅          |
 | [categorical_impute](#categorical_impute) | ✅           | ✅             | ✅          |
 | [numerical_impute](#numerical_impute)     | ✅           | ✅             | ✅          |
 | [random_impute](#random_impute)           | ✅           | ✅             | ✅          |
@@ -60,6 +61,7 @@ Currently this package supports:
     * [numerical_impute](#numerical_impute)
     * [random_impute](#random_impute)
 * [Encoding](#encoding)
+    * [bool_to_one_hot](#bool_to_one_hot)
     * [label_encode](#label_encode)
     * [one_hot_encode](#one_hot_encode)
     * [rare_category_encode](#rare_category_encode)
@@ -154,6 +156,28 @@ NOTE: This method assumes that at least one value has been observed in the input
 
 
 ## Encoding
+
+### bool_to_one_hot
+([source](macros/bool_to_one_hot.sql))
+
+This macro converts boolean columns to one-hot encoded format (0 or 1). It can handle multiple columns at once and provides options for handling null values.
+
+**Args:**
+
+- `columns` (required): List of boolean column names to convert to one-hot format
+- `null_as_one` (optional): Whether to treat null values as 1 (true) or 0 (false). Default is false
+- `prefix` (optional): Prefix to use for the output column names. Default is 'is_'
+
+**Usage:**
+
+```sql
+{{ dbt_ml_inline_preprocessing.bool_to_one_hot(
+    columns=['active', 'deleted', 'verified'],
+    null_as_one=false,
+    prefix='is_'
+   )
+}}
+```
 
 ### label_encode
 ([source](macros/categorical_encode.sql))
