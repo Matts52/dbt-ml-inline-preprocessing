@@ -26,6 +26,7 @@ Note: All methods in this package are meant to be used inline within a select st
 | [poly_transform](#poly_transform)         | ✅           | ✅             | ✅           
 | [robust_scale](#robust_scale)             | ✅           | ✅             | ✅          |
 | [standardize](#standardize)               | ✅           | ✅             | ✅          |
+| [cyclic_encode](#cyclic_encode)           | ✅           | ✅             | ✅          |
 
 
 ## Installation Instructions
@@ -65,6 +66,7 @@ Currently this package supports:
     * [label_encode](#label_encode)
     * [one_hot_encode](#one_hot_encode)
     * [rare_category_encode](#rare_category_encode)
+    * [cyclic_encode](#cyclic_encode)
 * [Numerical Transformation](#numerical-transformation)
     * [exponentiate](#exponentiate)
     * [interact](#interact)
@@ -250,6 +252,27 @@ This macro encodes rarely occuring categorical values with 'Other', leaving the 
     cutoff=0.10,
    )
 }}
+```
+
+### cyclic_encode
+([source](macros/cyclic_encode.sql))
+
+This macro encodes cyclical time or date features (such as hour of day, day of week, etc.) as values on a sine or cosine curve, preserving cyclical relationships.
+
+**Args:**
+
+- `column` (required): The column containing the datetime or cyclical value to encode.
+- `period` (required): The type of period to encode. Supported values: `hour_of_day`, `day_of_week`, `day_of_month`, `month_of_year`, `week_of_year`.
+- `func` (optional): The trigonometric function to use for encoding (e.g., `'sin'` or `'cos'`). Default is `'sin'`.
+
+**Usage:**
+
+```sql
+{{ dbt_ml_inline_preprocessing.cyclic_encode(
+    column='created_at',
+    period='hour_of_day',
+    func='sin'
+) }}
 ```
 
 ## Numerical Transformation
