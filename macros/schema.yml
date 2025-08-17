@@ -211,3 +211,17 @@ macros:
       - name: source_relation
         type: string
         description: (required for some databases) A Relation (a ref or source) that contains the list of columns you wish to select from
+
+  - name: cyclic_encode
+    description: |
+      Encodes a cyclical time or date feature (e.g., hour of day, day of week) as a value on a sine or cosine curve, preserving cyclical relationships for ML models.
+    arguments:
+      - name: column
+        type: string
+        description: The column containing the datetime or cyclical value to encode.
+      - name: period
+        type: string
+        description: The type of period to encode. Supported values -> hour_of_day, day_of_week, day_of_month, month_of_year, week_of_year.
+      - name: func
+        type: string
+        description: The trigonometric function to use for encoding (e.g., 'sin' or 'cos'). Default is 'sin'.

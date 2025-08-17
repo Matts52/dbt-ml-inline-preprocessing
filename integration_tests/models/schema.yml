@@ -148,3 +148,10 @@ models:
       - assert_close:
           actual: actual
           expected: expected
+
+  - name: test_cyclic_encode
+    data_tests:
+      - assert_close:
+          actual: actual
+          expected: expected
+
