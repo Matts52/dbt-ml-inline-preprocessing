@@ -54,8 +54,8 @@ dbt deps
 dbt seed
 dbt build --select +{your_model_name}
 ```
-To fully reload a seed, if changes have been make run:
+To fully reload a seed, if changes have been make sure to run:
 
 ```shell
-db seed --full-refresh
+dbt seed --full-refresh
 ```
