@@ -222,6 +222,9 @@ macros:
       - name: period
         type: string
         description: The type of period to encode. Supported values -> hour_of_day, day_of_week, day_of_month, month_of_year, week_of_year.
+      - name: offset
+        type: float
+        description: The amount of offset to apply the value before encoding.
       - name: func
         type: string
         description: The trigonometric function to use for encoding (e.g., 'sin' or 'cos'). Default is 'sin'.

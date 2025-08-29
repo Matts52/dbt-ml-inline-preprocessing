@@ -16,6 +16,7 @@ Note: All methods in this package are meant to be used inline within a select st
 | [label_encode](#label_encode)             | ✅           | ✅             | ✅          |
 | [one_hot_encode](#one_hot_encode)         | ✅           | ✅             | ✅          |
 | [rare_category_encode](#rare_category_encode) | ✅      | ✅             | ✅          |
+| [cyclic_encode](#cyclic_encode)           | ✅           | ✅             | ✅          |
 | [exponentiate](#exponentiate)             | ✅           | ✅             | ✅          |
 | [interact](#interact)                     | ✅           | ✅             | ✅          |
 | [k_bins_discretize](#k_bins_discretize)   | ✅           | ✅             | ✅          |
@@ -26,7 +27,7 @@ Note: All methods in this package are meant to be used inline within a select st
 | [poly_transform](#poly_transform)         | ✅           | ✅             | ✅           
 | [robust_scale](#robust_scale)             | ✅           | ✅             | ✅          |
 | [standardize](#standardize)               | ✅           | ✅             | ✅          |
-| [cyclic_encode](#cyclic_encode)           | ✅           | ✅             | ✅          |
+
 
 
 ## Installation Instructions
@@ -263,6 +264,7 @@ This macro encodes cyclical time or date features (such as hour of day, day of w
 
 - `column` (required): The column containing the datetime or cyclical value to encode.
 - `period` (required): The type of period to encode. Supported values: `hour_of_day`, `day_of_week`, `day_of_month`, `month_of_year`, `week_of_year`.
+- `offset` (optional): The amount of offset to apply to the raw number being input before encoding.
 - `func` (optional): The trigonometric function to use for encoding (e.g., `'sin'` or `'cos'`). Default is `'sin'`.
 
 **Usage:**
@@ -271,6 +273,7 @@ This macro encodes cyclical time or date features (such as hour of day, day of w
 {{ dbt_ml_inline_preprocessing.cyclic_encode(
     column='created_at',
     period='hour_of_day',
+    offset=0,
     func='sin'
 ) }}
 ```
