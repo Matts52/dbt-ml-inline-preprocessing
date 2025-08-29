@@ -1,8 +1,11 @@
-{% macro cyclic_encode(column, period, func='sin') %}
-    {{ return(adapter.dispatch('cyclic_encode', 'dbt_ml_inline_preprocessing')(column, period, func)) }}
+{% macro cyclic_encode(column, period, offset=0, func='sin') %}
+    {{ return(adapter.dispatch('cyclic_encode', 'dbt_ml_inline_preprocessing')(column, period, offset, func)) }}
 {% endmacro %}
 
-{% macro default__cyclic_encode(column, period, func='sin') %}
+{% macro default__cyclic_encode(column, period, offset, func='sin') %}
+
+    {% set pi = 3.141592653589793 %}
+
     {# Map period -> extract expression + cycle length #}
     {% if period == "hour_of_day" %}
         {% set expr = "extract(hour from " ~ column ~ ")" %}
@@ -27,6 +30,6 @@
         ) }}
     {% endif %}
 
-    {{ func }}(2 * pi() * ({{ expr }}::float / {{ max_val }}))
+    {{ func }}((2 * {{ pi }} * ({{ expr }}::float + {{ offset }})) / ({{ max_val }}::float))
 
 {% endmacro %}
