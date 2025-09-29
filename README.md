@@ -30,6 +30,8 @@ Note: All methods in this package are meant to be used inline within a select st
 | [uniform_noise](#uniform_noise)           | ✅           | ✅             | ✅          |
 | [gaussian_noise](#gaussian_noise)           | ✅           | ✅             | ✅          |
 | [laplacian_noise](#laplacian_noise)           | ✅           | ✅             | ✅          |
+| [exponential_noise](#exponential_noise)           | ✅           | ✅             | ✅          |
+
 
 ## Installation Instructions
 
@@ -84,6 +86,7 @@ Currently this package supports:
     * [uniform_noise](#uniform_noise)
     * [gaussian_noise](#gaussian_noise)
     * [laplacian_noise](#laplacian_noise)
+    * [exponential_noise](#exponential_noise)
 
 
 ----
@@ -566,7 +569,34 @@ This macro adds Laplacian (double exponential) random noise to a single numerica
 **Example usage:**
 
 ```sql
-select
-    {{ laplacian_noise('my_column', scale=0.5) }}
-from {{ ref('my_table') }}
+{{
+    laplacian_noise(
+        'user_rating',
+        scale=0.5
+    )
+}}
+```
+
+### exponential_noise
+
+([source](macros/exponential_noise.sql))
+
+This macro adds exponential random noise to a single numerical column. The noise is generated using the inverse transform sampling method, with configurable rate and scale parameters.
+
+**Args:**
+
+- `column` (required): Name of the numerical field to which noise will be added
+- `rate` (optional, default=1.0): The rate (lambda) parameter of the exponential distribution
+- `scale` (optional, default=1.0): The scale parameter to multiply the sampled noise
+
+**Example usage:**
+
+```sql
+{{
+    exponential_noise(
+        'user_rating',
+        rate=2.0,
+        scale=0.5
+    )
+}}
 ```
