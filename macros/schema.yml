@@ -228,3 +228,17 @@ macros:
       - name: func
         type: string
         description: The trigonometric function to use for encoding (e.g., 'sin' or 'cos'). Default is 'sin'.
+
+  - name: uniform_noise
+    description: |
+      This macro adds uniform random noise to a single numerical column. The noise is drawn from a uniform distribution in the range [-scale, scale] and added to the input column. Useful for data augmentation or regularization in ML workflows.
+    arguments:
+      - name: column
+        type: string
+        description: Name of the numerical field to which noise will be added
+      - name: scale
+        type: number
+        description: The maximum absolute value of the noise to add (noise is sampled from [-scale, scale]). Default is 1.0
+      - name: prefix
+        type: string
+        description: Prefix to use for the output column name. Default is 'noise_'
