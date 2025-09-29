@@ -29,7 +29,7 @@ Note: All methods in this package are meant to be used inline within a select st
 | [standardize](#standardize)               | ✅           | ✅             | ✅          |
 | [uniform_noise](#uniform_noise)           | ✅           | ✅             | ✅          |
 | [gaussian_noise](#gaussian_noise)           | ✅           | ✅             | ✅          |
-
+| [laplacian_noise](#laplacian_noise)           | ✅           | ✅             | ✅          |
 
 ## Installation Instructions
 
@@ -83,6 +83,7 @@ Currently this package supports:
 * [Noise](#noise)
     * [uniform_noise](#uniform_noise)
     * [gaussian_noise](#gaussian_noise)
+    * [laplacian_noise](#laplacian_noise)
 
 
 ----
@@ -549,4 +550,23 @@ This macro adds Gaussian (normal) random noise to a single numerical column. The
         scale=0.5
     )
 }}
+```
+
+### laplacian_noise
+
+([source](macros/laplacian_noise.sql))
+
+This macro adds Laplacian (double exponential) random noise to a single numerical column. The noise is generated using the inverse transform sampling method and scaled by the provided value.
+
+**Args:**
+
+- `column` (required): Name of the numerical field to which noise will be added
+- `scale` (optional, default=1.0): The scale (diversity) parameter of the Laplace distribution
+
+**Example usage:**
+
+```sql
+select
+    {{ laplacian_noise('my_column', scale=0.5) }}
+from {{ ref('my_table') }}
 ```
