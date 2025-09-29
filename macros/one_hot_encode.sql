@@ -8,7 +8,7 @@
 
     {% if categories == [] and source_relation == '' %}
         {% do exceptions.warn('Either source relation or categories must be set') %}
-    {% elif source_relation == '' %}
+    {% elif categories != [] %}
         {% set category_values = categories %}
     {% else %}
         {% set category_values = dbt_utils.get_column_values(

@@ -214,7 +214,10 @@ NOTE: One hot encoded fields will have the naming convention `is_{column_name}_{
 - `source_condition` (optional): A where clause condition to filter the field to be one-hot encoded by
 - `categories` (optional): An explicit list of categories to one-hot encode into
 
-Note: Either `source_relation` or `categories` must be set and do not impact each other. If `source_relation` is set, `source_condition` may be optionall used to filter categories found in the source relation.
+Note:
+* Either `source_relation` or `categories` must be set and do not impact each other.
+* If `source_relation` is set, `source_condition` may be optionally used to filter categories found in the source relation.
+* A cte may not be input in `source_relation` as this parameter depends on `dbt_utils.get_column_value()`, which assumes a materialized model
 
 **Usage:**
 
