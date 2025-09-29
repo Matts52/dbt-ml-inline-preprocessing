@@ -28,6 +28,7 @@ Note: All methods in this package are meant to be used inline within a select st
 | [robust_scale](#robust_scale)             | ✅           | ✅             | ✅          |
 | [standardize](#standardize)               | ✅           | ✅             | ✅          |
 | [uniform_noise](#uniform_noise)           | ✅           | ✅             | ✅          |
+| [gaussian_noise](#gaussian_noise)           | ✅           | ✅             | ✅          |
 
 
 ## Installation Instructions
@@ -81,6 +82,7 @@ Currently this package supports:
     * [standardize](#standardize)
 * [Noise](#noise)
     * [uniform_noise](#uniform_noise)
+    * [gaussian_noise](#gaussian_noise)
 
 
 ----
@@ -509,7 +511,7 @@ This macro transforms the given column into a normal distribution. Transforms to
 
 ([source](macros/uniform_noise.sql))
 
-This macro adds uniform random noise to a single numerical column. The noise is drawn from a uniform distribution in the range [-scale, scale] and added to the input column. Useful for data augmentation or regularization in ML workflows.
+This macro adds uniform random noise to a single numerical column. The noise is drawn from a uniform distribution in the range [-scale, scale] and added to the input column.
 
 **Args:**
 
@@ -524,5 +526,27 @@ This macro adds uniform random noise to a single numerical column. The noise is 
         column='user_rating',
         scale=2.0
    )
+}}
+```
+
+### gaussian_noise
+
+([source](macros/gaussian_noise.sql))
+
+This macro adds Gaussian (normal) random noise to a single numerical column. The noise is generated using the Box-Muller transform and scaled by the provided value.
+
+**Args:**
+
+- `column` (required): Name of the numerical field to which noise will be added
+- `scale` (optional, default=1.0): The standard deviation of the noise to add (noise is sampled from a normal distribution with mean 0 and this standard deviation)
+
+**Example usage:**
+
+```sql
+{{
+    dbt_ml_inline_preprocessing.gaussian_noise(
+        'user_rating',
+        scale=0.5
+    )
 }}
 ```
