@@ -11,4 +11,4 @@
         end as {{ prefix }}{{ column }}
         {%- if not loop.last %},{% endif -%}
     {% endfor %}
-{%- endmacro -%} 
+{%- endmacro -%}

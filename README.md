@@ -27,7 +27,7 @@ Note: All methods in this package are meant to be used inline within a select st
 | [poly_transform](#poly_transform)         | ✅           | ✅             | ✅           
 | [robust_scale](#robust_scale)             | ✅           | ✅             | ✅          |
 | [standardize](#standardize)               | ✅           | ✅             | ✅          |
-
+| [uniform_noise](#uniform_noise)           | ✅           | ✅             | ✅          |
 
 
 ## Installation Instructions
@@ -79,6 +79,8 @@ Currently this package supports:
     * [poly_transform](#poly_transform)
     * [robust_scale](#robust_scale)
     * [standardize](#standardize)
+* [Noise](#noise)
+    * [uniform_noise](#uniform_noise)
 
 
 ----
@@ -494,6 +496,30 @@ This macro transforms the given column into a normal distribution. Transforms to
     column='user_rating',
     target_mean=0,
     target_stddev=0,
+   )
+}}
+```
+
+## Noise
+
+### uniform_noise
+
+([source](macros/uniform_noise.sql))
+
+This macro adds uniform random noise to a single numerical column. The noise is drawn from a uniform distribution in the range [-scale, scale] and added to the input column. Useful for data augmentation or regularization in ML workflows.
+
+**Args:**
+
+- `column` (required): Name of the numerical field to which noise will be added
+- `scale` (optional, default=1.0): The maximum absolute value of the noise to add (noise is sampled from [-scale, scale])
+
+**Example usage:**
+
+```sql
+{{
+    dbt_ml_inline_preprocessing.uniform_noise(
+        column='user_rating',
+        scale=2.0
    )
 }}
 ```
