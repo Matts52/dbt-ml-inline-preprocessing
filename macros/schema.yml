@@ -239,6 +239,14 @@ macros:
       - name: scale
         type: number
         description: The maximum absolute value of the noise to add (noise is sampled from [-scale, scale]). Default is 1.0
-      - name: prefix
+
+  - name: gaussian_noise
+    description: |
+      This macro adds Gaussian (normal) random noise to a single numerical column. The noise is generated using the Box-Muller transform and scaled by the provided value. Useful for data augmentation or regularization in ML workflows.
+    arguments:
+      - name: column
         type: string
-        description: Prefix to use for the output column name. Default is 'noise_'
+        description: Name of the numerical field to which noise will be added
+      - name: scale
+        type: number
+        description: The standard deviation of the noise to add (noise is sampled from a normal distribution with mean 0 and this standard deviation). Default is 1.0
