@@ -275,3 +275,14 @@ macros:
       - name: scale
         type: number
         description: The scale parameter to multiply the sampled noise. Default is 1.0
+
+  - name: cauchy_noise
+    description: |
+      This macro adds Cauchy (Lorentzian) random noise to a single numerical column. The noise is generated using the inverse transform sampling method and scaled by the provided value.
+    arguments:
+      - name: column
+        type: string
+        description: Name of the numerical field to which noise will be added
+      - name: scale
+        type: number
+        description: The scale parameter of the Cauchy distribution. Default is 1.0

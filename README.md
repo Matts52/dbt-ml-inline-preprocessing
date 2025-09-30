@@ -31,7 +31,7 @@ Note: All methods in this package are meant to be used inline within a select st
 | [gaussian_noise](#gaussian_noise)           | ✅           | ✅             | ✅          |
 | [laplacian_noise](#laplacian_noise)           | ✅           | ✅             | ✅          |
 | [exponential_noise](#exponential_noise)           | ✅           | ✅             | ✅          |
-
+| [cauchy_noise](#cauchy_noise)           | ✅           | ✅             | ✅          |
 
 ## Installation Instructions
 
@@ -83,11 +83,11 @@ Currently this package supports:
     * [robust_scale](#robust_scale)
     * [standardize](#standardize)
 * [Noise](#noise)
-    * [uniform_noise](#uniform_noise)
+    * [cauchy_noise](#cauchy_noise)
+    * [exponential_noise](#exponential_noise)
     * [gaussian_noise](#gaussian_noise)
     * [laplacian_noise](#laplacian_noise)
-    * [exponential_noise](#exponential_noise)
-
+    * [uniform_noise](#uniform_noise)
 
 ----
 
@@ -511,25 +511,48 @@ This macro transforms the given column into a normal distribution. Transforms to
 
 ## Noise
 
-### uniform_noise
+### cauchy_noise
 
-([source](macros/uniform_noise.sql))
+([source](macros/cauchy_noise.sql))
 
-This macro adds uniform random noise to a single numerical column. The noise is drawn from a uniform distribution in the range [-scale, scale] and added to the input column.
+This macro adds Cauchy (Lorentzian) random noise to a single numerical column. The noise is generated using the inverse transform sampling method and scaled by the provided value.
 
 **Args:**
 
 - `column` (required): Name of the numerical field to which noise will be added
-- `scale` (optional, default=1.0): The maximum absolute value of the noise to add (noise is sampled from [-scale, scale])
+- `scale` (optional, default=1.0): The scale parameter of the Cauchy distribution
 
 **Example usage:**
 
 ```sql
 {{
-    dbt_ml_inline_preprocessing.uniform_noise(
-        column='user_rating',
-        scale=2.0
-   )
+    cauchy_noise(
+        'user_rating',
+        scale=0.5
+    )
+}}
+```
+### exponential_noise
+
+([source](macros/exponential_noise.sql))
+
+This macro adds exponential random noise to a single numerical column. The noise is generated using the inverse transform sampling method, with configurable rate and scale parameters.
+
+**Args:**
+
+- `column` (required): Name of the numerical field to which noise will be added
+- `rate` (optional, default=1.0): The rate (lambda) parameter of the exponential distribution
+- `scale` (optional, default=1.0): The scale parameter to multiply the sampled noise
+
+**Example usage:**
+
+```sql
+{{
+    exponential_noise(
+        'user_rating',
+        rate=2.0,
+        scale=0.5
+    )
 }}
 ```
 
@@ -577,26 +600,24 @@ This macro adds Laplacian (double exponential) random noise to a single numerica
 }}
 ```
 
-### exponential_noise
+### uniform_noise
 
-([source](macros/exponential_noise.sql))
+([source](macros/uniform_noise.sql))
 
-This macro adds exponential random noise to a single numerical column. The noise is generated using the inverse transform sampling method, with configurable rate and scale parameters.
+This macro adds uniform random noise to a single numerical column. The noise is drawn from a uniform distribution in the range [-scale, scale] and added to the input column.
 
 **Args:**
 
 - `column` (required): Name of the numerical field to which noise will be added
-- `rate` (optional, default=1.0): The rate (lambda) parameter of the exponential distribution
-- `scale` (optional, default=1.0): The scale parameter to multiply the sampled noise
+- `scale` (optional, default=1.0): The maximum absolute value of the noise to add (noise is sampled from [-scale, scale])
 
 **Example usage:**
 
 ```sql
 {{
-    exponential_noise(
-        'user_rating',
-        rate=2.0,
-        scale=0.5
-    )
+    dbt_ml_inline_preprocessing.uniform_noise(
+        column='user_rating',
+        scale=2.0
+   )
 }}
 ```
