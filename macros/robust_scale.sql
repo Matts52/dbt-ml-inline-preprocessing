@@ -1,11 +1,24 @@
 {% macro robust_scale(column, iqr=0.5, source_relation='') %}
+    {# Validate inputs #}
+    {% if column is none or column == '' %}
+        {{ exceptions.raise_compiler_error("robust_scale: 'column' parameter is required and cannot be empty.") }}
+    {% endif %}
+
+    {% if iqr is none %}
+        {{ exceptions.raise_compiler_error("robust_scale: 'iqr' parameter cannot be None.") }}
+    {% endif %}
+
+    {% if iqr <= 0 or iqr > 1 %}
+        {{ exceptions.raise_compiler_error("robust_scale: 'iqr' parameter must be between 0 (exclusive) and 1 (inclusive). Got: " ~ iqr ~ ".") }}
+    {% endif %}
+
     {{ return(adapter.dispatch('robust_scale', 'dbt_ml_inline_preprocessing')(column, iqr, source_relation)) }}
 {% endmacro %}
 
 {% macro default__robust_scale(column, iqr, source_relation)  %}
 
     {% if source_relation == '' %}
-        {% do exceptions.warn('Source relation is required for percentile impute in Postgresql 9.4+') %}
+        {{ exceptions.raise_compiler_error("robust_scale: 'source_relation' parameter is required for PostgreSQL/DuckDB. Please provide a ref() or source().") }}
     {% endif %}
 
     {% set median_query %}
@@ -26,8 +39,9 @@
         {{ column }} - {{ median }}
     )
     /
-    (
-        {{ iqr_plus }} - {{ iqr_minus }}
+    nullif(
+        {{ iqr_plus }} - {{ iqr_minus }},
+        0
     )
 
 {% endmacro %}
@@ -42,10 +56,11 @@
         {{ column }} - (percentile_cont(0.5) within group (order by {{ column }}) over ())
     )
     /
-    (
+    nullif(
         percentile_cont(0.5 + {{ iqr }}/2) within group (order by {{ column }}) over ()
         -
-        percentile_cont(0.5 - {{ iqr }}/2) within group (order by {{ column }}) over ()
+        percentile_cont(0.5 - {{ iqr }}/2) within group (order by {{ column }}) over (),
+        0
     )
 
 {% endmacro %}

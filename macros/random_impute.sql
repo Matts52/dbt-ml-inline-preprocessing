@@ -1,4 +1,18 @@
 {% macro random_impute(column, source_relation, data_type, consider_distribution=true) %}
+    {# Validate inputs #}
+    {% if column is none or column == '' %}
+        {{ exceptions.raise_compiler_error("random_impute: 'column' parameter is required and cannot be empty.") }}
+    {% endif %}
+
+    {% if source_relation is none or source_relation == '' %}
+        {{ exceptions.raise_compiler_error("random_impute: 'source_relation' parameter is required. Please provide a ref() or source().") }}
+    {% endif %}
+
+    {% set valid_data_types = ['numerical', 'categorical'] %}
+    {% if data_type not in valid_data_types %}
+        {{ exceptions.raise_compiler_error("random_impute: Invalid data_type '" ~ data_type ~ "'. Valid options are: " ~ valid_data_types | join(", ") ~ ".") }}
+    {% endif %}
+
     {{ return(adapter.dispatch('random_impute', 'dbt_ml_inline_preprocessing')(column, source_relation, data_type, consider_distribution)) }}
 {% endmacro %}
 
