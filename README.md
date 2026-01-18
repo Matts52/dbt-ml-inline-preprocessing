@@ -32,6 +32,7 @@ Note: All methods in this package are meant to be used inline within a select st
 | [laplacian_noise](#laplacian_noise)           | ✅           | ✅             | ✅          |
 | [exponential_noise](#exponential_noise)           | ✅           | ✅             | ✅          |
 | [cauchy_noise](#cauchy_noise)           | ✅           | ✅             | ✅          |
+| [zscore_outlier](#zscore_outlier)       | ✅           | ✅             | ✅          |
 
 ## Installation Instructions
 
@@ -82,6 +83,7 @@ Currently this package supports:
     * [poly_transform](#poly_transform)
     * [robust_scale](#robust_scale)
     * [standardize](#standardize)
+    * [zscore_outlier](#zscore_outlier)
 * [Noise](#noise)
     * [cauchy_noise](#cauchy_noise)
     * [exponential_noise](#exponential_noise)
@@ -505,6 +507,26 @@ This macro transforms the given column into a normal distribution. Transforms to
     column='user_rating',
     target_mean=0,
     target_stddev=0,
+   )
+}}
+```
+
+### zscore_outlier
+([source](macros/zscore_outlier.sql))
+
+This macro returns a binary value (1 or 0) indicating whether a value is an outlier based on its z-score. A value is considered an outlier if its absolute z-score exceeds the specified threshold. Uses `nullif` to safely handle cases where standard deviation is zero.
+
+**Args:**
+
+- `column` (required): Name of the numerical field to check for outliers
+- `threshold` (optional): The z-score threshold above which values are considered outliers. Default is 3
+
+**Usage:**
+
+```sql
+{{ dbt_ml_inline_preprocessing.zscore_outlier(
+    column='purchase_value',
+    threshold=3,
    )
 }}
 ```

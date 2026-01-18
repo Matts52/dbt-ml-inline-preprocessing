@@ -155,3 +155,9 @@ models:
           actual: actual
           expected: expected
 
+  - name: test_zscore_outlier
+    data_tests:
+      - assert_equal:
+          actual: actual
+          expected: expected
+

@@ -286,3 +286,14 @@ macros:
       - name: scale
         type: number
         description: The scale parameter of the Cauchy distribution. Default is 1.0
+
+  - name: zscore_outlier
+    description: |
+      This macro returns a binary value (1 or 0) indicating whether a value is an outlier based on its z-score. A value is considered an outlier if its absolute z-score exceeds the specified threshold.
+    arguments:
+      - name: column
+        type: string
+        description: Name of the numerical field to check for outliers
+      - name: threshold
+        type: number
+        description: The z-score threshold above which values are considered outliers. Default is 3
