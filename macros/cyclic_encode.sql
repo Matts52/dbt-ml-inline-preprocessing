@@ -1,4 +1,23 @@
 {% macro cyclic_encode(column, period, offset=0, func='sin') %}
+    {# Validate inputs #}
+    {% if column is none or column == '' %}
+        {{ exceptions.raise_compiler_error("cyclic_encode: 'column' parameter is required and cannot be empty.") }}
+    {% endif %}
+
+    {% if period is none or period == '' %}
+        {{ exceptions.raise_compiler_error("cyclic_encode: 'period' parameter is required and cannot be empty.") }}
+    {% endif %}
+
+    {% set valid_periods = ['hour_of_day', 'day_of_week', 'day_of_month', 'month_of_year', 'week_of_year'] %}
+    {% if period not in valid_periods %}
+        {{ exceptions.raise_compiler_error("cyclic_encode: Invalid period '" ~ period ~ "'. Valid options are: " ~ valid_periods | join(", ") ~ ".") }}
+    {% endif %}
+
+    {% set valid_funcs = ['sin', 'cos'] %}
+    {% if func not in valid_funcs %}
+        {{ exceptions.raise_compiler_error("cyclic_encode: Invalid func '" ~ func ~ "'. Valid options are: " ~ valid_funcs | join(", ") ~ ".") }}
+    {% endif %}
+
     {{ return(adapter.dispatch('cyclic_encode', 'dbt_ml_inline_preprocessing')(column, period, offset, func)) }}
 {% endmacro %}
 
@@ -24,10 +43,6 @@
     {% elif period == "week_of_year" %}
         {% set expr = "extract(week from " ~ column ~ ")" %}
         {% set max_val = 53 %}
-    {% else %}
-        {{ exceptions.raise_compiler_error(
-            "Unsupported period type: " ~ period ~ ". Supported period types are: hour_of_day, day_of_week, day_of_month, month_of_year, week_of_year."
-        ) }}
     {% endif %}
 
     {{ func }}((2 * {{ pi }} * ({{ expr }}::float + {{ offset }})) / ({{ max_val }}::float))

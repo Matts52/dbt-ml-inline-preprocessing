@@ -1,4 +1,13 @@
 {% macro one_hot_encode(column, source_relation='', source_condition='true', categories=[]) %}
+    {# Validate inputs #}
+    {% if column is none or column == '' %}
+        {{ exceptions.raise_compiler_error("one_hot_encode: 'column' parameter is required and cannot be empty.") }}
+    {% endif %}
+
+    {% if categories | length == 0 and source_relation == '' %}
+        {{ exceptions.raise_compiler_error("one_hot_encode: Either 'source_relation' or 'categories' must be provided. Please specify at least one.") }}
+    {% endif %}
+
     {{ return(adapter.dispatch('one_hot_encode', 'dbt_ml_inline_preprocessing')(column, source_relation, source_condition, categories)) }}
 {% endmacro %}
 
@@ -6,9 +15,7 @@
 
     {# Get the unique values that exist in the column to be encoded #}
 
-    {% if categories == [] and source_relation == '' %}
-        {% do exceptions.warn('Either source relation or categories must be set') %}
-    {% elif categories != [] %}
+    {% if categories != [] %}
         {% set category_values = categories %}
     {% else %}
         {% set category_values = dbt_utils.get_column_values(
@@ -20,7 +27,7 @@
                 + ' is not null '
                 + ' and '
                 + source_condition
-            ) or []    
+            ) or []
         %}
     {% endif %}
 
