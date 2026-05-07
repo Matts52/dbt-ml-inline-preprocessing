@@ -45,11 +45,11 @@
 {% macro snowflake__numerical_impute(column, measure, percentile, source_relation)  %}
 
     {% if measure == 'mean' %}
-        coalesce({{ column }}, avg({{ column }}) over ())
+        coalesce({{ column }}, avg({{ column }}) over ())::float
     {% elif measure == 'median' %}
-        coalesce({{ column }}, percentile_cont(0.5) within group (order by {{ column }}) over ())
+        coalesce({{ column }}, percentile_cont(0.5) within group (order by {{ column }}) over ())::float
     {% elif measure == 'percentile' %}
-        coalesce({{ column }}, percentile_cont({{ percentile }}) within group (order by {{ column }}) over ())
+        coalesce({{ column }}, percentile_cont({{ percentile }}) within group (order by {{ column }}) over ())::float
     {% endif %}
 
 {% endmacro %}
