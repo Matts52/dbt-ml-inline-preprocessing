@@ -18,10 +18,18 @@ models:
 
   - name: test_log_transform
     data_tests:
-      - assert_equal:
+      - assert_close:
           arguments:
-            actual: actual
-            expected: expected
+            actual: actual_base10
+            expected: expected_base10
+      - assert_close:
+          arguments:
+            actual: actual_base2
+            expected: expected_base2
+      - assert_close:
+          arguments:
+            actual: actual_offset1
+            expected: expected_offset1
 
   - name: test_categorical_impute
     data_tests:
@@ -207,3 +215,14 @@ models:
           arguments:
             actual: actual
             expected: expected
+
+  - name: test_power_transform
+    data_tests:
+      - assert_close:
+          arguments:
+            actual: actual_lam0
+            expected: expected_lam0
+      - assert_close:
+          arguments:
+            actual: actual_lam2
+            expected: expected_lam2
