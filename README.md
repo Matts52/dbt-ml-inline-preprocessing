@@ -17,6 +17,7 @@ Note: All methods in this package are meant to be used inline within a select st
 | [one_hot_encode](#one_hot_encode)         | ✅           | ✅             | ✅          |
 | [rare_category_encode](#rare_category_encode) | ✅      | ✅             | ✅          |
 | [frequency_encode](#frequency_encode)         | ✅           | ✅             | ✅          |
+| [missing_encode](#missing_encode)             | ✅           | ✅             | ✅          |
 | [cyclic_encode](#cyclic_encode)           | ✅           | ✅             | ✅          |
 | [exponentiate](#exponentiate)             | ✅           | ✅             | ✅          |
 | [interact](#interact)                     | ✅           | ✅             | ✅          |
@@ -73,6 +74,7 @@ Currently this package supports:
     * [one_hot_encode](#one_hot_encode)
     * [rare_category_encode](#rare_category_encode)
     * [frequency_encode](#frequency_encode)
+    * [missing_encode](#missing_encode)
     * [cyclic_encode](#cyclic_encode)
 * [Numerical Transformation](#numerical-transformation)
     * [exponentiate](#exponentiate)
@@ -284,6 +286,24 @@ This macro replaces each categorical value with its relative frequency (proporti
 ```sql
 {{ dbt_ml_inline_preprocessing.frequency_encode(
     column='country_code',
+   )
+}}
+```
+
+### missing_encode
+([source](macros/missing_encode.sql))
+
+This macro returns `1` if the column value is null and `0` otherwise. Useful for preserving missingness as a signal alongside any imputation macro.
+
+**Args:**
+
+- `column` (required): Name of the field to flag for missingness
+
+**Usage:**
+
+```sql
+{{ dbt_ml_inline_preprocessing.missing_encode(
+    column='user_age',
    )
 }}
 ```

@@ -1,0 +1,8 @@
+input,expected
+hello,0
+world,0
+,1
+foo,0
+,1
+,1
+bar,0

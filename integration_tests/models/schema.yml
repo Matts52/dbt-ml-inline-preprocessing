@@ -200,3 +200,10 @@ models:
           arguments:
             actual: actual
             expected: expected
+
+  - name: test_missing_encode
+    data_tests:
+      - assert_equal:
+          arguments:
+            actual: actual
+            expected: expected
