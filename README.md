@@ -16,6 +16,7 @@ Note: All methods in this package are meant to be used inline within a select st
 | [label_encode](#label_encode)             | ✅           | ✅             | ✅          |
 | [one_hot_encode](#one_hot_encode)         | ✅           | ✅             | ✅          |
 | [rare_category_encode](#rare_category_encode) | ✅      | ✅             | ✅          |
+| [frequency_encode](#frequency_encode)         | ✅           | ✅             | ✅          |
 | [cyclic_encode](#cyclic_encode)           | ✅           | ✅             | ✅          |
 | [exponentiate](#exponentiate)             | ✅           | ✅             | ✅          |
 | [interact](#interact)                     | ✅           | ✅             | ✅          |
@@ -71,6 +72,7 @@ Currently this package supports:
     * [label_encode](#label_encode)
     * [one_hot_encode](#one_hot_encode)
     * [rare_category_encode](#rare_category_encode)
+    * [frequency_encode](#frequency_encode)
     * [cyclic_encode](#cyclic_encode)
 * [Numerical Transformation](#numerical-transformation)
     * [exponentiate](#exponentiate)
@@ -264,6 +266,24 @@ This macro encodes rarely occuring categorical values with 'Other', leaving the 
 {{ dbt_ml_inline_preprocessing.rare_category_encode(
     column='user_type',
     cutoff=0.10,
+   )
+}}
+```
+
+### frequency_encode
+([source](macros/frequency_encode.sql))
+
+This macro replaces each categorical value with its relative frequency (proportion) in the dataset — a float between 0 and 1. Null values are passed through as null.
+
+**Args:**
+
+- `column` (required): Name of the field to be frequency encoded
+
+**Usage:**
+
+```sql
+{{ dbt_ml_inline_preprocessing.frequency_encode(
+    column='country_code',
    )
 }}
 ```

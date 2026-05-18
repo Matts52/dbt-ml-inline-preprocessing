@@ -4,160 +4,199 @@ models:
   - name: test_bool_to_one_hot
     data_tests:
       - assert_equal:
-          actual: is_active
-          expected: expected_is_active
+          arguments:
+            actual: is_active
+            expected: expected_is_active
       - assert_equal:
-          actual: is_deleted
-          expected: expected_is_deleted
+          arguments:
+            actual: is_deleted
+            expected: expected_is_deleted
       - assert_equal:
-          actual: is_verified
-          expected: expected_is_verified
+          arguments:
+            actual: is_verified
+            expected: expected_is_verified
 
   - name: test_log_transform
     data_tests:
       - assert_equal:
-          actual: actual
-          expected: expected
+          arguments:
+            actual: actual
+            expected: expected
 
   - name: test_categorical_impute
     data_tests:
       - assert_equal_string:
-          actual: actual
-          expected: expected
+          arguments:
+            actual: actual
+            expected: expected
 
   - name: test_max_absolute_scale
     data_tests:
       - assert_equal:
-          actual: actual
-          expected: expected
+          arguments:
+            actual: actual
+            expected: expected
 
   - name: test_min_max_scale
     data_tests:
       - assert_equal:
-          actual: actual
-          expected: expected
+          arguments:
+            actual: actual
+            expected: expected
 
   - name: test_numerical_impute
     data_tests:
       - assert_equal:
-          actual: actual_mean
-          expected: expected_mean
+          arguments:
+            actual: actual_mean
+            expected: expected_mean
       - assert_equal:
-          actual: actual_median
-          expected: expected_median
+          arguments:
+            actual: actual_median
+            expected: expected_median
 
   - name: test_one_hot_encode__source_relation
     data_tests:
       - assert_equal:
-          actual: is_input__cat
-          expected: expected_is_input__cat
+          arguments:
+            actual: is_input__cat
+            expected: expected_is_input__cat
       - assert_equal:
-          actual: is_input__dog
-          expected: expected_is_input__dog
+          arguments:
+            actual: is_input__dog
+            expected: expected_is_input__dog
       - assert_equal:
-          actual: is_input__
-          expected: expected_is_input__
+          arguments:
+            actual: is_input__
+            expected: expected_is_input__
 
   - name: test_one_hot_encode__categories
     data_tests:
       - assert_equal:
-          actual: is_input__cat
-          expected: expected_is_input__cat
+          arguments:
+            actual: is_input__cat
+            expected: expected_is_input__cat
       - assert_equal:
-          actual: is_input__dog
-          expected: expected_is_input__dog
+          arguments:
+            actual: is_input__dog
+            expected: expected_is_input__dog
       - assert_equal:
-          actual: is_input__
-          expected: expected_is_input__
+          arguments:
+            actual: is_input__
+            expected: expected_is_input__
 
   - name: test_poly_transform
     data_tests:
       - assert_equal:
-          actual: actual_2
-          expected: expected_2
+          arguments:
+            actual: actual_2
+            expected: expected_2
       - assert_equal:
-          actual: actual_1_2
-          expected: expected_1_2
+          arguments:
+            actual: actual_1_2
+            expected: expected_1_2
 
   - name: test_standardize
     data_tests:
       - assert_close:
-          actual: actual
-          expected: expected
+          arguments:
+            actual: actual
+            expected: expected
 
   - name: test_random_impute_cat
     data_tests:
       - assert_not_null:
-          column: actual
+          arguments:
+            column: actual
 
   - name: test_random_impute_num
     data_tests:
       - assert_not_null:
-          column: actual
+          arguments:
+            column: actual
 
   - name: test_k_bins_discretize
     data_tests:
       - assert_equal:
-          actual: actual_quantile
-          expected: expected_quantile
+          arguments:
+            actual: actual_quantile
+            expected: expected_quantile
       - assert_equal:
-          actual: actual_uniform
-          expected: expected_uniform
+          arguments:
+            actual: actual_uniform
+            expected: expected_uniform
 
   - name: test_rare_category_encode
     data_tests:
       - assert_equal_string:
-          actual: actual_20
-          expected: expected_20
+          arguments:
+            actual: actual_20
+            expected: expected_20
 
   - name: test_numerical_binarize
     data_tests:
       - assert_equal:
-          actual: actual_value
-          expected: expected_value
+          arguments:
+            actual: actual_value
+            expected: expected_value
       - assert_equal:
-          actual: actual_percentile
-          expected: expected_percentile
+          arguments:
+            actual: actual_percentile
+            expected: expected_percentile
 
   - name: test_interact
     data_tests:
       - assert_equal:
-          actual: actual_mult
-          expected: expected_mult
+          arguments:
+            actual: actual_mult
+            expected: expected_mult
       - assert_equal:
-          actual: actual_add
-          expected: expected_add
+          arguments:
+            actual: actual_add
+            expected: expected_add
       - assert_equal:
-          actual: actual_exp
-          expected: expected_exp
+          arguments:
+            actual: actual_exp
+            expected: expected_exp
 
   - name: test_label_encode
     data_tests:
       - assert_equal:
-          actual: actual
-          expected: expected
+          arguments:
+            actual: actual
+            expected: expected
 
   - name: test_robust_scale
     data_tests:
       - assert_equal:
-          actual: actual
-          expected: expected
+          arguments:
+            actual: actual
+            expected: expected
 
   - name: test_exponentiate
     data_tests:
       - assert_close:
-          actual: actual
-          expected: expected
+          arguments:
+            actual: actual
+            expected: expected
 
   - name: test_cyclic_encode
     data_tests:
       - assert_close:
-          actual: actual
-          expected: expected
+          arguments:
+            actual: actual
+            expected: expected
 
   - name: test_zscore_outlier
     data_tests:
       - assert_equal:
-          actual: actual
-          expected: expected
+          arguments:
+            actual: actual
+            expected: expected
 
+  - name: test_frequency_encode
+    data_tests:
+      - assert_equal:
+          arguments:
+            actual: actual
+            expected: expected

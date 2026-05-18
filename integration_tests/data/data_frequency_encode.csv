@@ -1,0 +1,11 @@
+input,expected
+cat,0.3
+cat,0.3
+cat,0.3
+dog,0.4
+dog,0.4
+dog,0.4
+dog,0.4
+bear,0.2
+bear,0.2
+,
