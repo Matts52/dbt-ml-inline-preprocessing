@@ -20,8 +20,16 @@ models:
     data_tests:
       - assert_close:
           arguments:
-            actual: actual
-            expected: expected
+            actual: actual_base10
+            expected: expected_base10
+      - assert_close:
+          arguments:
+            actual: actual_base2
+            expected: expected_base2
+      - assert_close:
+          arguments:
+            actual: actual_offset1
+            expected: expected_offset1
 
   - name: test_categorical_impute
     data_tests:
