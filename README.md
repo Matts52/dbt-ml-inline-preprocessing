@@ -403,11 +403,12 @@ This macro returns the given column after discretizing it into a specified numbe
 ### log_transform
 ([source](macros/log_transform.sql))
 
-This macro applies a Yeo-Johnson power transform with `lambda=0` to the column, equivalent to `ln(col + offset + 1)`. It is a convenience wrapper around [power_transform](#power_transform).
+This macro applies a log transformation to a column using a specified base. It is a convenience wrapper around [power_transform](#power_transform) (Yeo-Johnson `lambda=0`), equivalent to `ln(col + offset + 1) / ln(base)`.
 
 **Args:**
 
 - `column` (required): Name of the field that is to be log transformed
+- `base` (optional): The base of the log function. Must be positive and not equal to 1. Default is 10
 - `offset` (optional): Value added to the column before transforming. Default is 0
 
 **Usage:**
@@ -415,6 +416,7 @@ This macro applies a Yeo-Johnson power transform with `lambda=0` to the column, 
 ```sql
 {{ dbt_ml_inline_preprocessing.log_transform(
     column='purchase_value',
+    base=10,
     offset=0,
    )
 }}
