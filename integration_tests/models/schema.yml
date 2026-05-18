@@ -18,7 +18,7 @@ models:
 
   - name: test_log_transform
     data_tests:
-      - assert_equal:
+      - assert_close:
           arguments:
             actual: actual
             expected: expected
@@ -207,3 +207,14 @@ models:
           arguments:
             actual: actual
             expected: expected
+
+  - name: test_power_transform
+    data_tests:
+      - assert_close:
+          arguments:
+            actual: actual_lam0
+            expected: expected_lam0
+      - assert_close:
+          arguments:
+            actual: actual_lam2
+            expected: expected_lam2

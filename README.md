@@ -23,6 +23,7 @@ Note: All methods in this package are meant to be used inline within a select st
 | [interact](#interact)                     | ✅           | ✅             | ✅          |
 | [k_bins_discretize](#k_bins_discretize)   | ✅           | ✅             | ✅          |
 | [log_transform](#log_transform)          | ✅           | ✅             | ✅          |
+| [power_transform](#power_transform)       | ✅           | ✅             | ✅          |
 | [max_absolute_scale](#max_absolute_scale) | ✅           | ✅             | ✅          |
 | [min_max_scale](#min_max_scale)           | ✅           | ✅             | ✅          |
 | [numerical_binarize](#numerical_binarize) | ✅           | ✅             | ✅          |
@@ -81,6 +82,7 @@ Currently this package supports:
     * [interact](#interact)
     * [k_bins_discretize](#k_bins_discretize)
     * [log_transform](#log_transform)
+    * [power_transform](#power_transform)
     * [max_absolute_scale](#max_absolute_scale)
     * [min_max_scale](#min_max_scale)
     * [numerical_binarize](#numerical_binarize)
@@ -401,21 +403,49 @@ This macro returns the given column after discretizing it into a specified numbe
 ### log_transform
 ([source](macros/log_transform.sql))
 
-This macro returns the given column after applying a log transformation to the numerical data
+This macro applies a Yeo-Johnson power transform with `lambda=0` to the column, equivalent to `ln(col + offset + 1)`. It is a convenience wrapper around [power_transform](#power_transform).
 
 **Args:**
 
 - `column` (required): Name of the field that is to be log transformed
-- `base` (optional): The base of the log function that is transforming the column. Default is 10
-- `offset` (optional): Value to be added to all values in the column before log transforming. Common use case is when zero values are included in the column. Default is 0
+- `offset` (optional): Value added to the column before transforming. Default is 0
 
 **Usage:**
 
 ```sql
 {{ dbt_ml_inline_preprocessing.log_transform(
     column='purchase_value',
-    base=10,
-    offset=1,
+    offset=0,
+   )
+}}
+```
+
+### power_transform
+([source](macros/power_transform.sql))
+
+This macro applies the Yeo-Johnson power transformation to a column. Unlike Box-Cox, Yeo-Johnson supports zero and negative values. Setting `lambda=0` is equivalent to `log_transform`.
+
+The transform is defined as:
+- `y >= 0, lambda != 0`: `((y + 1)^lambda - 1) / lambda`
+- `y >= 0, lambda == 0`: `ln(y + 1)`
+- `y < 0, lambda != 2`: `-((-y + 1)^(2 - lambda) - 1) / (2 - lambda)`
+- `y < 0, lambda == 2`: `-ln(-y + 1)`
+
+where `y = column + offset`.
+
+**Args:**
+
+- `column` (required): Name of the field to transform
+- `lambda` (optional): The power parameter. `0` approximates a log transform, `1` is a near-identity, `2` is a quadratic-like transform. Default is `0`
+- `offset` (optional): Value added to the column before transforming. Useful for shifting distributions. Default is `0`
+
+**Usage:**
+
+```sql
+{{ dbt_ml_inline_preprocessing.power_transform(
+    column='purchase_value',
+    lambda=0.5,
+    offset=0,
    )
 }}
 ```
