@@ -6,10 +6,10 @@ macros:
       This macro converts boolean columns to one-hot encoded format (0 or 1). It can handle multiple columns at once and provides options for handling null values.
     arguments:
       - name: columns
-        type: list
+        type: list[string]
         description: List of boolean column names to convert to one-hot format
       - name: null_as_one
-        type: boolean
+        type: bool
         description: Whether to treat null values as 1 (true) or 0 (false). Default is false
       - name: prefix
         type: string
@@ -76,7 +76,7 @@ macros:
         type: integer
         description: The base of the log function that is transforming the column. Default is 10
       - name: offset
-        type: number
+        type: float
         description: Value to be added to all values in the column before log transforming. Common use case is when zero values are included in the column. Default is 0
 
   - name: max_absolute_scale
@@ -95,10 +95,10 @@ macros:
         type: string
         description: Name of the field that is to be transformed
       - name: new_min
-        type: number
+        type: float
         description: The new minimum value to scale towards
       - name: new_max
-        type: number
+        type: float
         description: The new maximum value to scale towards
 
   - name: numerical_binarize
@@ -109,7 +109,7 @@ macros:
         type: string
         description: Name of the field that is to be transformed
       - name: cutoff
-        type: number
+        type: float
         description: The value that serves as the boundary point for the binary variable. This should be a value between 0 and 1 for percentile cutoff's. Default is 0.5
       - name: strategy
         type: string
@@ -132,7 +132,7 @@ macros:
         type: string
         description: The measure by which to impute the data. It is set to use the 'mean' by default, but also support 'median' and 'percentile'
       - name: percentile
-        type: number
+        type: float
         description: If percentile is selected for the measure, this indicates the percentile value to impute into null values
       - name: source_relation
         type: string
@@ -154,7 +154,7 @@ macros:
         type: string
         description: (optional) A where clause condition to filter the field to be one-hot encoded by
       - name: categories
-        type: list
+        type: list[string]
         description: (optional) An explicit list of categories to one-hot encode into
 
   - name: poly_transform
@@ -184,7 +184,7 @@ macros:
         type: string
         description: The data type of this column. Either numerical or categorical
       - name: consider_distribution
-        type: boolean
+        type: bool
         description: Whether or not the distribution of existing values should be taken into account. Macro will run faster when this is set to false. Default is false
 
   - name: rare_category_encode
@@ -195,7 +195,7 @@ macros:
         type: string
         description: Name of the field that is to be rare category encoded
       - name: cutoff
-        type: number
+        type: float
         description: The percentage value (in decimal) that is to serve as the point where any values occuring with a lesser frequency are rare category encoded. Default is 0.05 (ie 5%)
 
   - name: robust_scale
@@ -206,7 +206,7 @@ macros:
         type: string
         description: Name of the field that is to be transformed
       - name: iqr
-        type: number
+        type: float
         description: The interquantile range to consider and scale by. Expects a number between 0 and 1 excluse. Default is 0.5, leading to a interquantile range stretching from the 25th percentile to the 75th percentile
       - name: source_relation
         type: string
@@ -237,7 +237,7 @@ macros:
         type: string
         description: Name of the numerical field to which noise will be added
       - name: scale
-        type: number
+        type: float
         description: The maximum absolute value of the noise to add (noise is sampled from [-scale, scale]). Default is 1.0
 
   - name: gaussian_noise
@@ -248,7 +248,7 @@ macros:
         type: string
         description: Name of the numerical field to which noise will be added
       - name: scale
-        type: number
+        type: float
         description: The standard deviation of the noise to add (noise is sampled from a normal distribution with mean 0 and this standard deviation). Default is 1.0
 
   - name: laplacian_noise
@@ -259,7 +259,7 @@ macros:
         type: string
         description: Name of the numerical field to which noise will be added
       - name: scale
-        type: number
+        type: float
         description: The scale (diversity) parameter of the Laplace distribution. Default is 1.0
 
   - name: exponential_noise
@@ -270,10 +270,10 @@ macros:
         type: string
         description: Name of the numerical field to which noise will be added
       - name: rate
-        type: number
+        type: float
         description: The rate (lambda) parameter of the exponential distribution. Default is 1.0
       - name: scale
-        type: number
+        type: float
         description: The scale parameter to multiply the sampled noise. Default is 1.0
 
   - name: cauchy_noise
@@ -284,7 +284,7 @@ macros:
         type: string
         description: Name of the numerical field to which noise will be added
       - name: scale
-        type: number
+        type: float
         description: The scale parameter of the Cauchy distribution. Default is 1.0
 
   - name: zscore_outlier
@@ -295,5 +295,5 @@ macros:
         type: string
         description: Name of the numerical field to check for outliers
       - name: threshold
-        type: number
+        type: float
         description: The z-score threshold above which values are considered outliers. Default is 3
